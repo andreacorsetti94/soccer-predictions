@@ -1,7 +1,8 @@
 package com.acorsetti;
 
-import com.acorsetti.service.impl.AlgorithmServiceImpl;
-import com.acorsetti.service.impl.TeamServiceImpl;
+import com.acorsetti.service.impl.BetServiceImpl;
+import com.acorsetti.service.impl.CountryServiceImpl;
+import com.acorsetti.service.impl.FixtureServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class SpringDataApplication implements CommandLineRunner {
 
 	@Autowired
-	private AlgorithmServiceImpl algoService;
+	private FixtureServiceImpl fixtureService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDataApplication.class, args);
@@ -22,6 +23,6 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
-		System.out.println(this.algoService.listAllAlgorithms());
+		System.out.println(this.fixtureService.fixturesByDay("2019"));
 	}
 }

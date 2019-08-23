@@ -31,7 +31,7 @@ public class HibernateConfig {
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        dataSourceBuilder.url("jdbc:sqlite:C:\\Users\\acorsett\\soccerlab\\tables\\Database.db");
+        dataSourceBuilder.url("jdbc:sqlite:C:\\Users\\acorsett\\soccerlab\\tables\\spring-data-db.db");
         return dataSourceBuilder.build();
     }
 
