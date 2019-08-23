@@ -1,5 +1,6 @@
 package com.acorsetti;
 
+import com.acorsetti.service.impl.AlgorithmServiceImpl;
 import com.acorsetti.service.impl.TeamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +14,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class SpringDataApplication implements CommandLineRunner {
 
 	@Autowired
-	private TeamServiceImpl teamService;
+	private AlgorithmServiceImpl algoService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDataApplication.class, args);
@@ -21,6 +22,6 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
-		System.out.println(this.teamService.listAllTeams().toString());
+		System.out.println(this.algoService.listAllAlgorithms());
 	}
 }
