@@ -34,7 +34,7 @@ public class Fixture {
     public Fixture() {
     }
 
-    public Fixture(String fixtureId, String eventTimestamp, String eventDate, String leagueId,
+    protected Fixture(String fixtureId, String eventTimestamp, String eventDate, String leagueId,
                    String round, String homeTeamId, String awayTeamId, String homeTeamName,
                    String awayTeamName, String status, String statusShort, String goalsHomeTeam,
                    String goalsAwayTeam, String halfTimeScore, String finalScore, String penalty,
@@ -157,72 +157,6 @@ public class Fixture {
                 ", halfTimeScore='" + halfTimeScore + '\'' +
                 ", penalty='" + penalty + '\'' +
                 '}';
-    }
-
-    public boolean isCompleted(){
-        return this.getStatusShort().equals("FT") || this.getStatus().equals("Match Finished");
-    }
-
-    public String winnerTeamId(){
-        try{
-            int goalsHome = Integer.parseInt( this.goalsHomeTeam );
-            int goalsAway = Integer.parseInt( this.goalsAwayTeam );
-
-            if ( goalsHome == goalsAway ) return "";
-
-            if ( goalsHome > goalsAway ) return this.homeTeamId;
-            return this.awayTeamId;
-        }
-        catch (NumberFormatException e){
-            return "";
-        }
-
-    }
-
-    public String loserTeamId(){
-        try{
-            int goalsHome = Integer.parseInt( this.goalsHomeTeam );
-            int goalsAway = Integer.parseInt( this.goalsAwayTeam );
-
-            if ( goalsHome == goalsAway ) return "";
-
-            if ( goalsHome > goalsAway ) return this.awayTeamId;
-            return this.homeTeamId;
-        }
-        catch ( NumberFormatException e){
-            return "";
-        }
-
-    }
-
-    public int getTeamGoalsFor(String teamId){
-        try{
-            if ( teamId.equals(this.homeTeamId) ) return Integer.parseInt( this.goalsHomeTeam );
-            if ( teamId.equals(this.awayTeamId) ) return Integer.parseInt( this.goalsAwayTeam );
-        }
-        catch (NumberFormatException e){
-            return 0;
-        }
-
-        return 0;
-    }
-
-    public int getTeamGoalsConceived(String teamId){
-        try{
-            if ( teamId.equals(this.homeTeamId) ) return Integer.parseInt( this.goalsAwayTeam );
-            if ( teamId.equals(this.awayTeamId) ) return Integer.parseInt( this.goalsHomeTeam );
-        }
-        catch (NumberFormatException e){
-            return 0;
-        }
-
-        return 0;
-    }
-
-    public int pointsForTeam(String teamId){
-        if ( this.winnerTeamId().equals(teamId) ) return 3;
-        if ( this.winnerTeamId().isEmpty() ) return 1;
-        return 0;
     }
 
     /**

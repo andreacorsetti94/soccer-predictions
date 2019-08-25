@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.acorsetti.repository")
 public class HibernateConfig {
+
 
     @Bean(name="entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
@@ -30,8 +32,10 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        dataSourceBuilder.url("jdbc:sqlite:C:\\Users\\acorsett\\soccerlab\\tables\\spring-data-db.db");
+        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
+        dataSourceBuilder.username("admin");
+        dataSourceBuilder.password("admin");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/soccerlab");
         return dataSourceBuilder.build();
     }
 
@@ -46,7 +50,8 @@ public class HibernateConfig {
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                "hibernate.dialect", "com.acorsetti.dialect.SQLiteDialect");
+                "hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return hibernateProperties;
     }
+
 }

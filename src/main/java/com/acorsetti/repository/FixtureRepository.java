@@ -3,6 +3,7 @@ package com.acorsetti.repository;
 import com.acorsetti.model.Fixture;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

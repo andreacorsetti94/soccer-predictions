@@ -1,6 +1,5 @@
 package com.acorsetti.config;
 
-
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +30,10 @@ public class HibernateConfigTest {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        dataSourceBuilder.url("jdbc:sqlite:C:\\Users\\acorsett\\soccerlab\\tables\\TEST_DB.db");
+        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
+        dataSourceBuilder.username("admin");
+        dataSourceBuilder.password("admin");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/soccerlab");
         return dataSourceBuilder.build();
     }
 
@@ -47,7 +48,8 @@ public class HibernateConfigTest {
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                "hibernate.dialect", "com.acorsetti.dialect.SQLiteDialect");
+                "hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return hibernateProperties;
     }
+
 }
