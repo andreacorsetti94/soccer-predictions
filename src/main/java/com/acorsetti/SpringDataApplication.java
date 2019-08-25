@@ -5,11 +5,10 @@ import com.acorsetti.service.impl.TeamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.time.LocalDate;
+import java.time.Month;
 
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
@@ -26,7 +25,6 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
-		//System.out.println(this.fixtureService.fixturesByDay("2019"));
-		System.out.println(this.teamService.listAllTeams().toString());
+		System.out.println(this.fixtureService.lastTeamMatches("4091", 10, "523","522").size());
 	}
 }

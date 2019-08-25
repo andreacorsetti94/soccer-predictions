@@ -1,11 +1,13 @@
 package com.acorsetti.model;
 
+import java.time.LocalDateTime;
+
 public class FixtureBuilder {
 
     private String fixtureId;
 
     private String eventTimestamp;
-    private String eventDate;
+    private LocalDateTime eventDate;
     private String leagueId;
     private String round;
     private String homeTeamId;
@@ -41,7 +43,7 @@ public class FixtureBuilder {
         return this;
     }
 
-    public FixtureBuilder withEventDate(String eventDate){
+    public FixtureBuilder withEventDate(LocalDateTime eventDate){
         this.eventDate = eventDate;
         return this;
     }

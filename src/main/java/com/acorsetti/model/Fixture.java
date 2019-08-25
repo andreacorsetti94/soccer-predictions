@@ -3,6 +3,7 @@ package com.acorsetti.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +14,7 @@ public class Fixture {
     private String fixtureId;
 
     private String eventTimestamp;
-    private String eventDate;
+    private LocalDateTime eventDate;
     private String leagueId;
     private String round;
     private String homeTeamId;
@@ -34,7 +35,7 @@ public class Fixture {
     public Fixture() {
     }
 
-    protected Fixture(String fixtureId, String eventTimestamp, String eventDate, String leagueId,
+    protected Fixture(String fixtureId, String eventTimestamp, LocalDateTime eventDate, String leagueId,
                    String round, String homeTeamId, String awayTeamId, String homeTeamName,
                    String awayTeamName, String status, String statusShort, String goalsHomeTeam,
                    String goalsAwayTeam, String halfTimeScore, String finalScore, String penalty,
@@ -69,7 +70,7 @@ public class Fixture {
         return eventTimestamp;
     }
 
-    public String getEventDate() {
+    public LocalDateTime getEventDate() {
         return eventDate;
     }
 

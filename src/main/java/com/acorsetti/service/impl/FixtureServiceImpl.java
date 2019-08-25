@@ -6,7 +6,11 @@ import com.acorsetti.service.FixtureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FixtureServiceImpl implements FixtureService {
@@ -14,10 +18,28 @@ public class FixtureServiceImpl implements FixtureService {
     @Autowired
     private FixtureRepository fixtureRepository;
 
-    public List<Fixture> fixturesByDay(String dayLike){
-        return this.fixtureRepository.findByEventDateOrderByDateAsc(dayLike);
+    public List<Fixture> fixturesByDay(LocalDate dayLike){
+        return this.fixtureRepository.findByEventDate(dayLike);
     }
 
+    public Fixture byId(String id){
+        return this.fixtureRepository.findByFixtureId(id);
+    }
+
+    public List<Fixture> lastTeamMatches(String teamId, int numOfMatches, String... leaguesId){
+        List<Fixture> teamMatches = this.fixtureRepository.findByTeamIdOrderByEventDateDesc(teamId);
+
+        return teamMatches
+                .stream()
+                .filter(match ->{
+                    if ( leaguesId == null || leaguesId.length == 0 ) return true;
+                    return Arrays.asList(leaguesId).contains(match.getLeagueId());
+                    }
+                )
+                .filter(match -> match.getEventDate().isBefore(LocalDateTime.now() ) )
+                .limit(numOfMatches)
+                .collect(Collectors.toList());
+    }
 
     public boolean isCompleted(Fixture fixture){
         return fixture.getStatusShort().equals("FT") || fixture.getStatus().equals("Match Finished");

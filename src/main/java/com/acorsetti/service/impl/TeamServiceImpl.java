@@ -20,4 +20,8 @@ public class TeamServiceImpl implements TeamService {
         this.teamRepository.findAll().forEach(teams::add);
         return teams;
     }
+
+    public Team byId(String id){
+        return this.teamRepository.findByTeamId(id);
+    }
 }
