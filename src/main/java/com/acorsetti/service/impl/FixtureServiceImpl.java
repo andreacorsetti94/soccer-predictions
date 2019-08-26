@@ -107,4 +107,8 @@ public class FixtureServiceImpl implements FixtureService {
         return 0;
     }
 
+    public int goalSum(Fixture fixture){
+        return this.getTeamGoalsFor(fixture, fixture.getHomeTeamId()) + this.getTeamGoalsFor(fixture, fixture.getAwayTeamId());
+    }
+
 }

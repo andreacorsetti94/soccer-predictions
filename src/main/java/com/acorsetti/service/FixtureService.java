@@ -18,4 +18,6 @@ public interface FixtureService {
 
     Fixture byId(String id);
     List<Fixture> lastTeamMatches(String teamId, int numOfMatches, String... leaguesId);
+
+    int goalSum(Fixture fixture);
 }

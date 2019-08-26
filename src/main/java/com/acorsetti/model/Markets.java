@@ -76,6 +76,12 @@ public class Markets {
         public String getRepresentation(){
             return this.representation;
         }
+
+        @Override
+        public String toString(){
+            if ( this.representation == null ) return this.toString();
+            return this.representation;
+        }
     }
 
     public enum MarketType {
