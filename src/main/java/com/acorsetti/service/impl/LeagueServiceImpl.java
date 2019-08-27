@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.League;
+import com.acorsetti.model.jpa.League;
 import com.acorsetti.repository.LeagueRepository;
 import com.acorsetti.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.LeagueTeam;
-import com.acorsetti.model.Team;
+import com.acorsetti.model.jpa.LeagueTeam;
+import com.acorsetti.model.jpa.Team;
 import com.acorsetti.repository.LeagueTeamRepository;
 import com.acorsetti.service.LeagueTeamService;
 import com.acorsetti.service.TeamService;

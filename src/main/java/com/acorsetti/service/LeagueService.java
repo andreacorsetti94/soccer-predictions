@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.League;
+import com.acorsetti.model.jpa.League;
 
 import java.util.List;
 

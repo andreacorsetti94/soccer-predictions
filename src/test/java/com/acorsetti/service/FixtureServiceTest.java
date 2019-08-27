@@ -2,7 +2,7 @@ package com.acorsetti.service;
 
 import com.acorsetti.SpringDataApplication;
 import com.acorsetti.config.HibernateConfigTest;
-import com.acorsetti.model.Fixture;
+import com.acorsetti.model.jpa.Fixture;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

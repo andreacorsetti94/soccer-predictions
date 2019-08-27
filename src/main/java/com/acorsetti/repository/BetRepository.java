@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.Bet;
+import com.acorsetti.model.jpa.Bet;
 import com.acorsetti.model.keys.BetCompositeKey;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

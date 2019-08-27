@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.Algorithm;
+import com.acorsetti.model.jpa.Algorithm;
 
 import java.util.List;
 

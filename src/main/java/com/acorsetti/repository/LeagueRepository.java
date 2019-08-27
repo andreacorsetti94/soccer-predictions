@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.League;
+import com.acorsetti.model.jpa.League;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;

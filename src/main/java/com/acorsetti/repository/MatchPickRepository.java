@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.MatchPick;
+import com.acorsetti.model.jpa.MatchPick;
 import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.keys.MatchPickCompositeKey;
 import org.springframework.data.jpa.repository.Query;

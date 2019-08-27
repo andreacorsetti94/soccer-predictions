@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Season;
+import com.acorsetti.model.jpa.Season;
 import com.acorsetti.repository.SeasonRepository;
 import com.acorsetti.service.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;

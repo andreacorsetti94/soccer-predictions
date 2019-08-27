@@ -1,7 +1,7 @@
 package com.acorsetti.service.impl;
 
 import com.acorsetti.model.enums.MarketValue;
-import com.acorsetti.model.MatchPick;
+import com.acorsetti.model.jpa.MatchPick;
 import com.acorsetti.repository.MatchPickRepository;
 import com.acorsetti.service.MatchPickService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.Season;
+import com.acorsetti.model.jpa.Season;
 
 import java.util.List;
 

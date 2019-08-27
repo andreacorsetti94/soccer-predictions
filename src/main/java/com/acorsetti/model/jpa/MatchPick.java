@@ -1,9 +1,9 @@
-package com.acorsetti.model;
+package com.acorsetti.model.jpa;
 
 import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.enums.PickResult;
+import com.acorsetti.model.eval.Chance;
 import com.acorsetti.model.keys.MatchPickCompositeKey;
-import com.acorsetti.utils.OddsUtils;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -20,7 +20,7 @@ public class MatchPick {
     private MarketValue market;
 
     private double odds;
-    private double chance;
+    private Chance chance;
     private double pickValue;
 
     @Enumerated(EnumType.STRING)
@@ -29,12 +29,12 @@ public class MatchPick {
     public MatchPick() {
     }
 
-    public MatchPick(String fixtureId, MarketValue market, double odds, double chance) {
+    public MatchPick(String fixtureId, MarketValue market, double odds, Chance chance, double pickValue) {
         this.fixtureId = fixtureId;
         this.market = market;
         this.odds = odds;
         this.chance = chance;
-        this.pickValue = OddsUtils.expectedValue(this.odds, this.chance);
+        this.pickValue = pickValue;
         this.pickResult = PickResult.TO_BE_DEFINED;
     }
 
@@ -50,7 +50,7 @@ public class MatchPick {
         return odds;
     }
 
-    public double getChance() {
+    public Chance getChance() {
         return chance;
     }
 
@@ -92,4 +92,10 @@ public class MatchPick {
         return Objects.hash(fixtureId, market);
     }
 
+    /*
+        public static double computePickValue(double odds, double chance){
+        if ( chance == 0 ) return 0;
+        return MathUtils.round((chance/100) - (1/odds), 2);
+    }
+     */
 }

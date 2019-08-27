@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.StandingPosition;
+import com.acorsetti.model.jpa.StandingPosition;
 
 import java.util.List;
 

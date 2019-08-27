@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Fixture;
+import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.repository.FixtureRepository;
 import com.acorsetti.service.FixtureService;
 import org.springframework.beans.factory.annotation.Autowired;

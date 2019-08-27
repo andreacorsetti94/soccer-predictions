@@ -1,4 +1,4 @@
-package com.acorsetti.model;
+package com.acorsetti.model.jpa;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

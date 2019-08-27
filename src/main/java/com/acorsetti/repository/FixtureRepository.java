@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.Fixture;
+import com.acorsetti.model.jpa.Fixture;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

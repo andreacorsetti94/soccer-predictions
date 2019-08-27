@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.LeagueTeam;
+import com.acorsetti.model.jpa.LeagueTeam;
 import com.acorsetti.model.keys.LeagueTeamCompositeKey;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

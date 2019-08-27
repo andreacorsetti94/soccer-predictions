@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.StandingPosition;
+import com.acorsetti.model.jpa.StandingPosition;
 import com.acorsetti.model.keys.StandingPositionCompositeKey;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

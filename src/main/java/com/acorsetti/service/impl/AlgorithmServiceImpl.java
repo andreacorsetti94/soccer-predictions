@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Algorithm;
+import com.acorsetti.model.jpa.Algorithm;
 import com.acorsetti.repository.AlgorithmRepository;
 import com.acorsetti.service.AlgorithmService;
 import org.springframework.beans.factory.annotation.Autowired;

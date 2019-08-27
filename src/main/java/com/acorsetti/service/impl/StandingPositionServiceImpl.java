@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.StandingPosition;
+import com.acorsetti.model.jpa.StandingPosition;
 import com.acorsetti.repository.StandingPositionRepository;
 import com.acorsetti.service.StandingPositionService;
 import org.springframework.beans.factory.annotation.Autowired;

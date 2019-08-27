@@ -1,7 +1,7 @@
 package com.acorsetti.service;
 
 import com.acorsetti.model.enums.MarketValue;
-import com.acorsetti.model.MatchPick;
+import com.acorsetti.model.jpa.MatchPick;
 
 import java.util.List;
 

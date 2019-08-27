@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.Team;
+import com.acorsetti.model.jpa.Team;
 
 import java.util.List;
 

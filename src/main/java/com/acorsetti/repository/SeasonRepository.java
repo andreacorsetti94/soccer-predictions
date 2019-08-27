@@ -1,6 +1,6 @@
 package com.acorsetti.repository;
 
-import com.acorsetti.model.Season;
+import com.acorsetti.model.jpa.Season;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Bet;
+import com.acorsetti.model.jpa.Bet;
 import com.acorsetti.repository.BetRepository;
 import com.acorsetti.service.BetService;
 import org.springframework.beans.factory.annotation.Autowired;

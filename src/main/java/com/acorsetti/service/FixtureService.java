@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.Fixture;
+import com.acorsetti.model.jpa.Fixture;
 
 import java.time.LocalDate;
 import java.util.List;

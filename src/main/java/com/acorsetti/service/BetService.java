@@ -1,6 +1,6 @@
 package com.acorsetti.service;
 
-import com.acorsetti.model.Bet;
+import com.acorsetti.model.jpa.Bet;
 
 import java.util.List;
 

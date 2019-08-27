@@ -1,4 +1,4 @@
-package com.acorsetti.model;
+package com.acorsetti.model.jpa;
 
 import com.acorsetti.model.keys.LeagueTeamCompositeKey;
 

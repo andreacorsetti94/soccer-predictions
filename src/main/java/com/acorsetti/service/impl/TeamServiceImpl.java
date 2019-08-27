@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Team;
+import com.acorsetti.model.jpa.Team;
 import com.acorsetti.repository.TeamRepository;
 import com.acorsetti.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;

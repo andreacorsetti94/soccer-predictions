@@ -1,11 +1,10 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Fixture;
+import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.enums.PickResult;
 import com.acorsetti.service.FixtureService;
 import com.acorsetti.service.PickResultExtracterService;
-import com.acorsetti.utils.FixtureUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,19 +92,29 @@ public class PickResultExtracterServiceImpl implements PickResultExtracterServic
             return PickResult.NO;
         }
 
-        int goalsHome;
-        int goalsAway;
-        try{
-            goalsHome = FixtureUtils.goalsFromScore(marketRepresentation, true);
-            goalsAway = FixtureUtils.goalsFromScore(marketRepresentation, false);
-        }
-        catch (Exception e){
-            logger.warn("No goals extracted from match: " + fixture + " Market: " + marketRepresentation);
-            return PickResult.TO_BE_DEFINED;
-        }
+        int goalsHomeRepresentation = extractGoalsFromScore(marketRepresentation, true);
+        int goalsAwayRepresentation = extractGoalsFromScore(marketRepresentation, false);
 
-        if ( goalsHome != matchGoalsHome || goalsAway != matchGoalsAway ) return PickResult.NO;
+        if ( goalsAwayRepresentation == -1 || goalsHomeRepresentation == -1 ) return PickResult.TO_BE_DEFINED;
+
+        if ( goalsHomeRepresentation != matchGoalsHome || goalsAwayRepresentation != matchGoalsAway ) return PickResult.NO;
         return PickResult.YES;
+    }
+
+    private static int extractGoalsFromScore(String score, boolean home) {
+        try{
+            if ( home ){
+                return Integer.parseInt(score.split("-")[0].trim());
+            }
+            else{
+                return Integer.parseInt(score.split("-")[1].trim());
+            }
+
+        }
+        catch(Exception e){
+            logger.warn("Goals from score string: " + score + " not retrieved");
+            return -1;
+        }
     }
 
     private PickResult bttsHda(Fixture fixture, boolean bttsYes, int hdaFlag){
