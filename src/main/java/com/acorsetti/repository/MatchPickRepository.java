@@ -14,10 +14,10 @@ public interface MatchPickRepository extends PagingAndSortingRepository<MatchPic
     MatchPick findByFixtureIdAndMarket(String fixtureId, MarketValue marketValue);
     List<MatchPick> findByOddsBetween(double lowerBound, double upperBound);
 
-    @Query("FROM MatchPick WHERE PickResult IS NULL OR PickResult = 'TO_BE_DEFINED'")
+    @Query("FROM MatchPick WHERE pickResult IS NULL OR pickResult = 'TO_BE_DEFINED'")
     List<MatchPick> findOpenPicks();
 
-    @Query("FROM MatchPick WHERE (PickResult IS NULL OR PickResult = 'TO_BE_DEFINED') AND PickValue > 0")
+    @Query("FROM MatchPick WHERE (pickResult IS NULL OR pickResult = 'TO_BE_DEFINED') AND PickValue > 0")
     List<MatchPick> findValuableOpenPicks();
 
 }
