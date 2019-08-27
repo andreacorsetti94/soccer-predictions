@@ -5,9 +5,11 @@ import com.acorsetti.model.MatchPick;
 import com.acorsetti.repository.MatchPickRepository;
 import com.acorsetti.service.MatchPickService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MatchPickServiceImpl implements MatchPickService {
 
     @Autowired

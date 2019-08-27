@@ -16,8 +16,7 @@ public class CountryServiceImpl implements CountryService {
     private CountryRepository countryRepository;
 
     public List<Country> allCountries(){
-        List<Country> countries = new ArrayList<>();
-        this.countryRepository.findAll().forEach(countries::add);
-        return countries;
+        return this.countryRepository.findAll();
     }
+
 }

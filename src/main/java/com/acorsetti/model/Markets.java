@@ -79,7 +79,7 @@ public class Markets {
 
         @Override
         public String toString(){
-            if ( this.representation == null ) return this.toString();
+            if ( this.representation == null ) return super.toString();
             return this.representation;
         }
     }

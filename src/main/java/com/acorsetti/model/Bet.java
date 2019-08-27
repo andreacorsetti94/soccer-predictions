@@ -17,7 +17,7 @@ public class Bet {
     private String fixtureId;
 
     @Id
-    private Markets.MarketValue market;
+    private String market;
 
     private Double profit;
     private Double amount;
@@ -26,7 +26,7 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(String algoId, String fixtureId, Markets.MarketValue market, Double amount, Double odds, Double profit) {
+    public Bet(String algoId, String fixtureId, String market, Double amount, Double odds, Double profit) {
         this.algoId = algoId;
         this.fixtureId = fixtureId;
         this.market = market;
@@ -35,7 +35,7 @@ public class Bet {
         this.profit = profit;
     }
 
-    public Markets.MarketValue getMarket(){
+    public String getMarket(){
         return market;
     }
 

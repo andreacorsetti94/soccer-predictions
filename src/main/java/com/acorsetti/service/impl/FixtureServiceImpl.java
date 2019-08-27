@@ -42,6 +42,7 @@ public class FixtureServiceImpl implements FixtureService {
     }
 
     public boolean isCompleted(Fixture fixture){
+        if ( fixture == null ) return false;
         return fixture.getStatusShort().equals("FT") || fixture.getStatus().equals("Match Finished");
     }
 
@@ -103,7 +104,11 @@ public class FixtureServiceImpl implements FixtureService {
 
     public int pointsForTeam(Fixture fixture, String teamId){
         if ( this.winnerTeamId(fixture).equals(teamId) ) return 3;
-        if ( this.winnerTeamId(fixture).isEmpty() ) return 1;
+
+        if ( this.winnerTeamId(fixture).isEmpty() ){
+            if ( this.isCompleted(fixture) ) return 1;
+            return 0;
+        }
         return 0;
     }
 

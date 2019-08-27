@@ -33,7 +33,7 @@ public class HibernateConfigTest {
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.username("admin");
         dataSourceBuilder.password("admin");
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/soccerlab");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/soccerlab-test");
         return dataSourceBuilder.build();
     }
 

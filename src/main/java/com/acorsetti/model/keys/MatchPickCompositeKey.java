@@ -8,5 +8,5 @@ import java.io.Serializable;
 public class MatchPickCompositeKey implements Serializable {
 
     private String fixtureId;
-    private Markets.MarketValue marketValue;
+    private Markets.MarketValue market;
 }

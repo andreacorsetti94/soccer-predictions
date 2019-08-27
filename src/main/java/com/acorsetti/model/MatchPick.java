@@ -16,19 +16,19 @@ public class MatchPick {
     private String fixtureId;
 
     @Id
-    private Markets.MarketValue marketValue;
+    private Markets.MarketValue market;
 
-    private double oddValue;
+    private double odds;
     private double chance;
     private double expectedValue;
     private MarketResults.Result result;
 
-    public MatchPick(String fixtureId, Markets.MarketValue marketValue, double oddValue, double chance) {
+    public MatchPick(String fixtureId, Markets.MarketValue market, double odds, double chance) {
         this.fixtureId = fixtureId;
-        this.marketValue = marketValue;
-        this.oddValue = oddValue;
+        this.market = market;
+        this.odds = odds;
         this.chance = chance;
-        this.expectedValue = OddsUtils.expectedValue(this.oddValue, this.chance);
+        this.expectedValue = OddsUtils.expectedValue(this.odds, this.chance);
         this.result = MarketResults.Result.TO_BE_DEFINED;
     }
 
@@ -36,12 +36,12 @@ public class MatchPick {
         return fixtureId;
     }
 
-    public Markets.MarketValue getMarketValue() {
-        return marketValue;
+    public Markets.MarketValue getMarket() {
+        return market;
     }
 
-    public double getOddValue() {
-        return oddValue;
+    public double getOdds() {
+        return odds;
     }
 
     public double getChance() {
@@ -64,8 +64,8 @@ public class MatchPick {
     public String toString() {
         return "MatchPick{" +
                 "fixtureId=" + fixtureId +
-                ", marketValue=" + marketValue +
-                ", oddValue=" + oddValue +
+                ", market=" + market +
+                ", odds=" + odds +
                 ", chance=" + chance +
                 ", expectedValue=" + expectedValue +
                 ", result=" + result +
@@ -78,12 +78,12 @@ public class MatchPick {
         if (o == null || getClass() != o.getClass()) return false;
         MatchPick matchPick = (MatchPick) o;
         return Objects.equals(fixtureId, matchPick.fixtureId) &&
-                marketValue == matchPick.marketValue;
+                market == matchPick.market;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fixtureId, marketValue);
+        return Objects.hash(fixtureId, market);
     }
 
 }
