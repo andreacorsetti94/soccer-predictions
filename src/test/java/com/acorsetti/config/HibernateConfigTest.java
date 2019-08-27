@@ -1,8 +1,11 @@
 package com.acorsetti.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -15,13 +18,17 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.acorsetti.repository")
+@PropertySource("classpath:hibernate.properties")
 public class HibernateConfigTest {
+
+    @Autowired
+    private Environment env;
 
     @Bean(name="entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.acorsetti.model" );
+        sessionFactory.setPackagesToScan( env.getProperty("packagesToScan") );
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
@@ -30,10 +37,10 @@ public class HibernateConfigTest {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        dataSourceBuilder.username("admin");
-        dataSourceBuilder.password("admin");
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/soccerlab-test");
+        dataSourceBuilder.driverClassName(env.getProperty("driverClassName"));
+        dataSourceBuilder.username(env.getProperty("dbUsername"));
+        dataSourceBuilder.password(env.getProperty("dbPassword"));
+        dataSourceBuilder.url(env.getProperty("dbUrl"));
         return dataSourceBuilder.build();
     }
 
@@ -45,10 +52,10 @@ public class HibernateConfigTest {
         return transactionManager;
     }
 
-    private final Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+                "hibernate.dialect", env.getProperty("dialect") );
         return hibernateProperties;
     }
 
