@@ -1,7 +1,6 @@
 package com.acorsetti.service.impl;
 
 import com.acorsetti.model.Fixture;
-import com.acorsetti.model.Markets;
 import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.enums.PickResult;
 import com.acorsetti.service.FixtureService;
@@ -24,7 +23,6 @@ public class PickResultExtracterServiceImpl implements PickResultExtracterServic
 
     @Override
     public PickResult pickResult(Fixture f, MarketValue marketValue) {
-        if ( !Markets.validMarketValues().contains(marketValue) ) return PickResult.TO_BE_DEFINED;
         if ( marketValue == MarketValue.EMPTY_MARKET_VALUE ) return PickResult.NO;
 
         switch (marketValue){

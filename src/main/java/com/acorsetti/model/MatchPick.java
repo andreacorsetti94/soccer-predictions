@@ -70,7 +70,7 @@ public class MatchPick {
     public String toString() {
         return "MatchPick{" +
                 "fixtureId=" + fixtureId +
-                ", market=" + market +
+                ", market=" + market.getRepresentation() +
                 ", odds=" + odds +
                 ", chance=" + chance +
                 ", pickValue=" + pickValue +
