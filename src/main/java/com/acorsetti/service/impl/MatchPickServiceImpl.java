@@ -1,6 +1,6 @@
 package com.acorsetti.service.impl;
 
-import com.acorsetti.model.Markets;
+import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.MatchPick;
 import com.acorsetti.repository.MatchPickRepository;
 import com.acorsetti.service.MatchPickService;
@@ -19,8 +19,8 @@ public class MatchPickServiceImpl implements MatchPickService {
         return this.matchPickRepository.findAll();
     }
 
-    public MatchPick byFixtureAndMarket(String fixtureId, Markets.MarketValue marketValue){
-        return this.matchPickRepository.findByFixtureIdAndMarketValue(fixtureId, marketValue.toString());
+    public MatchPick byFixtureAndMarket(String fixtureId, MarketValue marketValue){
+        return this.matchPickRepository.findByFixtureIdAndMarket(fixtureId, marketValue);
     }
 
     public List<MatchPick> picksWithOddsBetween(double lowerBound, double upperBound){

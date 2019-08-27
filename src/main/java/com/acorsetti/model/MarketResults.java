@@ -1,5 +1,7 @@
 package com.acorsetti.model;
 
+import com.acorsetti.model.enums.MarketValue;
+import com.acorsetti.model.enums.PickResult;
 import com.acorsetti.service.FixtureService;
 import com.acorsetti.utils.FixtureUtils;
 import org.apache.log4j.Logger;
@@ -17,22 +19,9 @@ public class MarketResults {
         this.fixture = fixture;
     }
 
-    public enum Result {
-        TO_BE_DEFINED, YES, NO;
-
-        public static Result byName(String name){
-            switch (name){
-                case "TO_BE_DEFINED": return TO_BE_DEFINED;
-                case "YES": return YES;
-                case "NO": return NO;
-                default: return TO_BE_DEFINED;
-            }
-        }
-    }
-
-    public Result result(Markets.MarketValue marketValue){
-        if ( !Markets.validMarketValues().contains(marketValue) ) return Result.TO_BE_DEFINED;
-        if ( marketValue == Markets.MarketValue.EMPTY_MARKET_VALUE ) return Result.NO;
+    public PickResult PickResult(MarketValue marketValue){
+        if ( !Markets.validMarketValues().contains(marketValue) ) return PickResult.TO_BE_DEFINED;
+        if ( marketValue == MarketValue.EMPTY_MARKET_VALUE ) return PickResult.NO;
 
         switch (marketValue){
             case HDA_HOME: return hda(0);
@@ -88,17 +77,17 @@ public class MarketResults {
         }
     }
 
-    private Result exactScore(String marketRepresentation){
-        if ( !this.fixtureService.isCompleted(this.fixture) ) return Result.TO_BE_DEFINED;
+    private PickResult exactScore(String marketRepresentation){
+        if ( !this.fixtureService.isCompleted(this.fixture) ) return PickResult.TO_BE_DEFINED;
 
-        if ( marketRepresentation == null || marketRepresentation.isEmpty() ) return Result.TO_BE_DEFINED;
+        if ( marketRepresentation == null || marketRepresentation.isEmpty() ) return PickResult.TO_BE_DEFINED;
 
         int matchGoalsHome = this.fixtureService.getTeamGoalsFor(this.fixture, this.fixture.getHomeTeamId());
         int matchGoalsAway = this.fixtureService.getTeamGoalsFor(this.fixture, this.fixture.getAwayTeamId());
 
         if ( marketRepresentation.equalsIgnoreCase("Other") ){
-            if ( matchGoalsHome > 4 || matchGoalsAway > 4 ) return Result.YES;
-            return Result.NO;
+            if ( matchGoalsHome > 4 || matchGoalsAway > 4 ) return PickResult.YES;
+            return PickResult.NO;
         }
 
         int goalsHome;
@@ -109,129 +98,129 @@ public class MarketResults {
         }
         catch (Exception e){
             logger.warn("No goals extracted from match: " + this.fixture + " Market: " + marketRepresentation);
-            return Result.TO_BE_DEFINED;
+            return PickResult.TO_BE_DEFINED;
         }
 
-        if ( goalsHome != matchGoalsHome || goalsAway != matchGoalsAway ) return Result.NO;
-        return Result.YES;
+        if ( goalsHome != matchGoalsHome || goalsAway != matchGoalsAway ) return PickResult.NO;
+        return PickResult.YES;
     }
 
-    private Result bttsHda(boolean bttsYes, int hdaFlag){
-        if ( !this.fixtureService.isCompleted(this.fixture) ) return Result.TO_BE_DEFINED;
+    private PickResult bttsHda(boolean bttsYes, int hdaFlag){
+        if ( !this.fixtureService.isCompleted(this.fixture) ) return PickResult.TO_BE_DEFINED;
 
-        if ( btts(bttsYes) != Result.YES ) return Result.NO;
-        if ( hda(hdaFlag) != Result.YES ) return Result.NO;
+        if ( btts(bttsYes) != PickResult.YES ) return PickResult.NO;
+        if ( hda(hdaFlag) != PickResult.YES ) return PickResult.NO;
 
-        return Result.YES;
+        return PickResult.YES;
     }
 
-    private Result btts(boolean bttsYes){
+    private PickResult btts(boolean bttsYes){
 
         int goalsHome = this.fixtureService.getTeamGoalsFor(this.fixture, this.fixture.getHomeTeamId());
         int goalsAway = this.fixtureService.getTeamGoalsFor(this.fixture, this.fixture.getHomeTeamId());
 
         if ( bttsYes ){
-            if (goalsAway > 0 && goalsHome > 0) return Result.YES;
+            if (goalsAway > 0 && goalsHome > 0) return PickResult.YES;
 
             if ( this.fixtureService.isCompleted(this.fixture) && (goalsAway == 0 || goalsHome == 0) ) {
-                return Result.NO;
+                return PickResult.NO;
             }
         }
         else {
-            if (goalsAway > 0 && goalsHome > 0) return Result.NO;
+            if (goalsAway > 0 && goalsHome > 0) return PickResult.NO;
 
             if (this.fixtureService.isCompleted(this.fixture)  && (goalsAway == 0 || goalsHome == 0)) {
-                return Result.YES;
+                return PickResult.YES;
             }
         }
-        return Result.TO_BE_DEFINED;
+        return PickResult.TO_BE_DEFINED;
 
     }
 
-    private Result hda(int flag){
-        if ( !this.fixtureService.isCompleted(this.fixture)  ) return Result.TO_BE_DEFINED;
+    private PickResult hda(int flag){
+        if ( !this.fixtureService.isCompleted(this.fixture)  ) return PickResult.TO_BE_DEFINED;
 
         String winnerId = this.fixtureService.winnerTeamId(this.fixture);
         if ( flag == 0 ){  //HDA_HOME
-            if ( winnerId.equals(this.fixture.getHomeTeamId())) return Result.YES;
-            return Result.NO;
+            if ( winnerId.equals(this.fixture.getHomeTeamId())) return PickResult.YES;
+            return PickResult.NO;
         }
         else if( flag == 1 ){ //HDA_DRAW
-            if ( winnerId.isEmpty() ) return Result.YES;
-            return Result.NO;
+            if ( winnerId.isEmpty() ) return PickResult.YES;
+            return PickResult.NO;
         }
         else{ //flag == 2 : HDA_AWAY
-            if ( winnerId.equals(this.fixture.getAwayTeamId() ) ) return Result.YES;
-            return Result.NO;
+            if ( winnerId.equals(this.fixture.getAwayTeamId() ) ) return PickResult.YES;
+            return PickResult.NO;
         }
     }
 
-    private Result dc(int flag1, int flag2){ //0: HOME, 1: DRAW, 2: AWAY
+    private PickResult dc(int flag1, int flag2){ //0: HOME, 1: DRAW, 2: AWAY
 
-        if (! this.fixtureService.isCompleted(this.fixture) ) return Result.TO_BE_DEFINED;
+        if (! this.fixtureService.isCompleted(this.fixture) ) return PickResult.TO_BE_DEFINED;
 
         String homeId = this.fixture.getHomeTeamId();
         String awayId = this.fixture.getAwayTeamId();
 
         String winnerId = this.fixtureService.winnerTeamId(this.fixture);
         if ( winnerId.isEmpty() ){
-            if (flag1 == 1 || flag2 == 1) return Result.YES;
-            return Result.NO;
+            if (flag1 == 1 || flag2 == 1) return PickResult.YES;
+            return PickResult.NO;
         }
         else if( winnerId.equals(homeId) ){
-            if ( flag1 == 0 || flag2 == 0 ) return Result.YES;
-            return Result.NO;
+            if ( flag1 == 0 || flag2 == 0 ) return PickResult.YES;
+            return PickResult.NO;
         }
         else if( winnerId.equals(awayId) ){
-            if (flag1 == 2 || flag2 == 2) return Result.YES;
-            return Result.NO;
+            if (flag1 == 2 || flag2 == 2) return PickResult.YES;
+            return PickResult.NO;
         }
         else{
-            return Result.TO_BE_DEFINED;
+            return PickResult.TO_BE_DEFINED;
         }
     }
 
-    private Result over(int overLimit){
+    private PickResult over(int overLimit){
         String home = this.fixture.getHomeTeamId();
         String away = this.fixture.getAwayTeamId();
 
         int goalSum = this.fixtureService.goalSum(this.fixture);
 
         if ( goalSum > overLimit ){
-            return Result.YES;
+            return PickResult.YES;
         }
         else if( this.fixtureService.isCompleted(this.fixture)  ){
-            return Result.NO;
+            return PickResult.NO;
         }
-        return Result.TO_BE_DEFINED;
+        return PickResult.TO_BE_DEFINED;
     }
 
-    private Result under(int underLimit) {
+    private PickResult under(int underLimit) {
         String home = this.fixture.getHomeTeamId();
         String away = this.fixture.getAwayTeamId();
 
         int goalSum = this.fixtureService.goalSum(this.fixture);
         if (goalSum > underLimit) {
-            return Result.NO;
+            return PickResult.NO;
         } else if ( this.fixtureService.isCompleted(this.fixture) ) {
-            return Result.YES;
+            return PickResult.YES;
         }
-        return Result.TO_BE_DEFINED;
+        return PickResult.TO_BE_DEFINED;
     }
 
-    private Result hdaOverUnder(int hdaFlag, int limit, boolean over){
-        if ( ! this.fixtureService.isCompleted(this.fixture)   ) return Result.TO_BE_DEFINED;
+    private PickResult hdaOverUnder(int hdaFlag, int limit, boolean over){
+        if ( ! this.fixtureService.isCompleted(this.fixture)   ) return PickResult.TO_BE_DEFINED;
 
-        if ( hda(hdaFlag) != Result.YES ) return Result.NO;
-        Result underOverResult;
+        if ( hda(hdaFlag) != PickResult.YES ) return PickResult.NO;
+        PickResult underOverPickResult;
         if ( over ){
-            underOverResult = over(limit);
+            underOverPickResult = over(limit);
         }
         else{
-            underOverResult = under(limit);
+            underOverPickResult = under(limit);
         }
-        if ( underOverResult != Result.YES ) return Result.NO;
-        return Result.YES;
+        if ( underOverPickResult != PickResult.YES ) return PickResult.NO;
+        return PickResult.YES;
     }
 
 }

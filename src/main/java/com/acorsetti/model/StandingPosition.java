@@ -5,6 +5,7 @@ import com.acorsetti.model.keys.StandingPositionCompositeKey;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import java.time.LocalDate;
 
 @Entity
 @IdClass(StandingPositionCompositeKey.class)
@@ -14,44 +15,44 @@ public class StandingPosition {
     private String leagueId;
 
     @Id
-    private String rank;
+    private int rank;
 
     @Id
     private String teamName;
 
     private int played;
-    private int wonMatches;
-    private int drawMatches;
-    private int lostMatches;
-    private int goalsScored;
-    private int goalsReceived;
+    private int won;
+    private int draw;
+    private int lost;
+    private int goalsFor;
+    private int goalsAgainst;
     private int goalsDiff;
     private int points;
     private String group;
-    private String lastUpd;
+    private LocalDate lastUpd;
 
     public StandingPosition() {
     }
 
-    public StandingPosition(String leagueId, String rank, String teamName, int played, int wonMatches, int drawMatches, int lostMatches,
-                            int goalsScored, int goalsReceived, int goalsDiff, int points, String group, String lastUpd) {
+    public StandingPosition(String leagueId, int rank, String teamName, int played, int won, int draw, int lost,
+                            int goalsFor, int goalsAgainst, int goalsDiff, int points, String group, LocalDate lastUpd) {
 
         this.leagueId = leagueId;
         this.rank = rank;
         this.teamName = teamName;
         this.played = played;
-        this.wonMatches = wonMatches;
-        this.drawMatches = drawMatches;
-        this.lostMatches = lostMatches;
-        this.goalsScored = goalsScored;
-        this.goalsReceived = goalsReceived;
+        this.won = won;
+        this.draw = draw;
+        this.lost = lost;
+        this.goalsFor = goalsFor;
+        this.goalsAgainst = goalsAgainst;
         this.goalsDiff = goalsDiff;
         this.points = points;
         this.group = group;
         this.lastUpd = lastUpd;
     }
 
-    public String getRank() {
+    public int getRank() {
         return rank;
     }
 
@@ -63,24 +64,24 @@ public class StandingPosition {
         return played;
     }
 
-    public int getWonMatches() {
-        return wonMatches;
+    public int getWon() {
+        return won;
     }
 
-    public int getDrawMatches() {
-        return drawMatches;
+    public int getDraw() {
+        return draw;
     }
 
-    public int getLostMatches() {
-        return lostMatches;
+    public int getLost() {
+        return lost;
     }
 
-    public int getGoalsScored() {
-        return goalsScored;
+    public int getGoalsFor() {
+        return goalsFor;
     }
 
-    public int getGoalsReceived() {
-        return goalsReceived;
+    public int getGoalsAgainst() {
+        return goalsAgainst;
     }
 
     public int getGoalsDiff() {
@@ -95,7 +96,7 @@ public class StandingPosition {
         return group;
     }
 
-    public String getLastUpd() {
+    public LocalDate getLastUpd() {
         return lastUpd;
     }
 
@@ -109,11 +110,11 @@ public class StandingPosition {
                 ", teamName='" + teamName + '\'' +
                 ", points=" + points +
                 ", played=" + played +
-                ", wonMatches=" + wonMatches +
-                ", drawMatches=" + drawMatches +
-                ", lostMatches=" + lostMatches +
-                ", goalsScored=" + goalsScored +
-                ", goalsReceived=" + goalsReceived +
+                ", won=" + won +
+                ", draw=" + draw +
+                ", lost=" + lost +
+                ", goalsFor=" + goalsFor +
+                ", goalsAgainst=" + goalsAgainst +
                 ", goalsDiff=" + goalsDiff +
                 ", group=" + group +
                 '}';

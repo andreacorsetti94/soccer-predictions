@@ -1,11 +1,11 @@
 package com.acorsetti.model;
 
+import com.acorsetti.model.enums.MarketValue;
+import com.acorsetti.model.enums.PickResult;
 import com.acorsetti.model.keys.MatchPickCompositeKey;
 import com.acorsetti.utils.OddsUtils;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -16,27 +16,33 @@ public class MatchPick {
     private String fixtureId;
 
     @Id
-    private Markets.MarketValue market;
+    @Enumerated(EnumType.STRING)
+    private MarketValue market;
 
     private double odds;
     private double chance;
-    private double expectedValue;
-    private MarketResults.Result result;
+    private double pickValue;
 
-    public MatchPick(String fixtureId, Markets.MarketValue market, double odds, double chance) {
+    @Enumerated(EnumType.STRING)
+    private PickResult pickResult;
+
+    public MatchPick() {
+    }
+
+    public MatchPick(String fixtureId, MarketValue market, double odds, double chance) {
         this.fixtureId = fixtureId;
         this.market = market;
         this.odds = odds;
         this.chance = chance;
-        this.expectedValue = OddsUtils.expectedValue(this.odds, this.chance);
-        this.result = MarketResults.Result.TO_BE_DEFINED;
+        this.pickValue = OddsUtils.expectedValue(this.odds, this.chance);
+        this.pickResult = PickResult.TO_BE_DEFINED;
     }
 
     public String getFixtureId() {
         return fixtureId;
     }
 
-    public Markets.MarketValue getMarket() {
+    public MarketValue getMarket() {
         return market;
     }
 
@@ -48,16 +54,16 @@ public class MatchPick {
         return chance;
     }
 
-    public double getExpectedValue() {
-        return expectedValue;
+    public double getPickValue() {
+        return pickValue;
     }
 
-    public MarketResults.Result getResult() {
-        return result;
+    public PickResult getPickResult() {
+        return pickResult;
     }
 
-    public void setResult(MarketResults.Result result) {
-        this.result = result;
+    public void setPickResult(PickResult pickResult) {
+        this.pickResult = pickResult;
     }
 
     @Override
@@ -67,8 +73,8 @@ public class MatchPick {
                 ", market=" + market +
                 ", odds=" + odds +
                 ", chance=" + chance +
-                ", expectedValue=" + expectedValue +
-                ", result=" + result +
+                ", pickValue=" + pickValue +
+                ", pickResult=" + pickResult +
                 '}';
     }
 

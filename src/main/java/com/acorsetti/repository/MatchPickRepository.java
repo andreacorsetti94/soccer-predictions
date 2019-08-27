@@ -1,6 +1,7 @@
 package com.acorsetti.repository;
 
 import com.acorsetti.model.MatchPick;
+import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.keys.MatchPickCompositeKey;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface MatchPickRepository extends PagingAndSortingRepository<MatchPick, MatchPickCompositeKey> {
 
     List<MatchPick> findAll();
-    MatchPick findByFixtureIdAndMarketValue(String fixtureId, String marketValue);
+    MatchPick findByFixtureIdAndMarket(String fixtureId, MarketValue marketValue);
     List<MatchPick> findByOddsBetween(double lowerBound, double upperBound);
 
     @Query("FROM MatchPick WHERE PickResult IS NULL OR PickResult = 'TO_BE_DEFINED'")

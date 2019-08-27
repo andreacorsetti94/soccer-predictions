@@ -4,9 +4,11 @@ import com.acorsetti.model.StandingPosition;
 import com.acorsetti.repository.StandingPositionRepository;
 import com.acorsetti.service.StandingPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StandingPositionServiceImpl implements StandingPositionService {
 
     @Autowired
