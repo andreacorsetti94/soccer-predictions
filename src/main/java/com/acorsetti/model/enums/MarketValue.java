@@ -72,4 +72,6 @@ public enum MarketValue {
         }
         return MarketValue.EMPTY_MARKET_VALUE;
     }
+
+
 }

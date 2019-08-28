@@ -8,4 +8,5 @@ public interface BetService {
 
     boolean hasAlgoAlreadyPlacedBetOnFixture(String algoId, String fixtureId);
     List<Bet> openBets();
+    void saveBets(List<Bet> bets);
 }

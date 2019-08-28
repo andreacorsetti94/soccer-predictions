@@ -1,7 +1,10 @@
 package com.acorsetti.model.jpa;
 
+import com.acorsetti.model.converter.OddsValueAttributeConverter;
 import com.acorsetti.model.keys.BetCompositeKey;
+import com.acorsetti.model.odds.OddsValue;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -21,12 +24,13 @@ public class Bet {
 
     private Double profit;
     private Double amount;
-    private Double odds;
+
+    private OddsValue odds;
 
     public Bet() {
     }
 
-    public Bet(String algoId, String fixtureId, String market, Double amount, Double odds, Double profit) {
+    public Bet(String algoId, String fixtureId, String market, Double amount, OddsValue odds, Double profit) {
         this.algoId = algoId;
         this.fixtureId = fixtureId;
         this.market = market;
@@ -55,7 +59,7 @@ public class Bet {
         return amount;
     }
 
-    public Double getOdds() {
+    public OddsValue getOdds() {
         return odds;
     }
 

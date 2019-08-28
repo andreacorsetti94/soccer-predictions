@@ -4,6 +4,7 @@ import com.acorsetti.SpringDataApplication;
 import com.acorsetti.config.HibernateConfigTest;
 import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.enums.PickResult;
+import com.acorsetti.model.odds.OddsValue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,34 +42,35 @@ public class MatchPickServiceTest {
 
     @Test
     public void testPicksWithOddsBetween(){
-        double low = 0.0;
-        double high = 10.0;
+        OddsValue low = new OddsValue(2.0);
+        OddsValue high = new OddsValue(10.0);
 
-        this.matchPickService.picksWithOddsBetween(low,high).forEach( matchPick -> {
-            assertTrue(matchPick.getOdds() >= low && matchPick.getOdds() <= high);
-        });
+        this.matchPickService.picksWithOddsBetween(low.getValue(),high.getValue()).forEach( matchPick ->
+                assertTrue(matchPick.getOdds().getValue() >= low.getValue()
+                && matchPick.getOdds().getValue() <= high.getValue()));
 
+        OddsValue newHigh = new OddsValue(-10.0);
 
-        double newHigh = -10.0;
-
-        assertEquals(0, this.matchPickService.picksWithOddsBetween(low, newHigh).size());
+        assertEquals(0, this.matchPickService.picksWithOddsBetween(low.getValue(), newHigh.getValue()).size());
 
     }
 
     @Test
     public void testOpenPicks(){
-        this.matchPickService.openPicks().forEach( pick -> {
-            assertTrue(pick.getPickResult() != PickResult.YES && pick.getPickResult() != PickResult.NO);
-        });
+        this.matchPickService.openPicks().forEach( pick ->
+                assertTrue(pick.getPickResult() != PickResult.YES
+                        && pick.getPickResult() != PickResult.NO)
+        );
     }
 
     @Test
     public void testOpenValuablePicks(){
-        this.matchPickService.openValuablePicks().forEach( pick -> {
-            assertTrue(
-                    pick.getPickResult() != PickResult.YES
-                            && pick.getPickResult() != PickResult.NO
-                            && pick.getPickValue() > 0);
-        });
+        this.matchPickService.openValuablePicks().forEach( pick ->
+                assertTrue(
+                pick.getPickResult() != PickResult.YES
+                        && pick.getPickResult() != PickResult.NO
+                        && pick.getPickValue().getValue() > 0
+                )
+        );
     }
 }

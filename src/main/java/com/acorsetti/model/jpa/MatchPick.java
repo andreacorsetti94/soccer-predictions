@@ -1,9 +1,12 @@
 package com.acorsetti.model.jpa;
 
+import com.acorsetti.model.converter.OddsValueAttributeConverter;
 import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.enums.PickResult;
 import com.acorsetti.model.eval.Chance;
+import com.acorsetti.model.eval.PickValue;
 import com.acorsetti.model.keys.MatchPickCompositeKey;
+import com.acorsetti.model.odds.OddsValue;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -19,9 +22,10 @@ public class MatchPick {
     @Enumerated(EnumType.STRING)
     private MarketValue market;
 
-    private double odds;
+    private OddsValue odds;
+
     private Chance chance;
-    private double pickValue;
+    private PickValue pickValue;
 
     @Enumerated(EnumType.STRING)
     private PickResult pickResult;
@@ -29,7 +33,7 @@ public class MatchPick {
     public MatchPick() {
     }
 
-    public MatchPick(String fixtureId, MarketValue market, double odds, Chance chance, double pickValue) {
+    public MatchPick(String fixtureId, MarketValue market, OddsValue odds, Chance chance, PickValue pickValue) {
         this.fixtureId = fixtureId;
         this.market = market;
         this.odds = odds;
@@ -46,7 +50,7 @@ public class MatchPick {
         return market;
     }
 
-    public double getOdds() {
+    public OddsValue getOdds() {
         return odds;
     }
 
@@ -54,7 +58,7 @@ public class MatchPick {
         return chance;
     }
 
-    public double getPickValue() {
+    public PickValue getPickValue() {
         return pickValue;
     }
 
@@ -84,18 +88,14 @@ public class MatchPick {
         if (o == null || getClass() != o.getClass()) return false;
         MatchPick matchPick = (MatchPick) o;
         return Objects.equals(fixtureId, matchPick.fixtureId) &&
-                market == matchPick.market;
+                market == matchPick.market &&
+                Objects.equals(odds, matchPick.odds) &&
+                Objects.equals(chance, matchPick.chance) &&
+                Objects.equals(pickValue, matchPick.pickValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fixtureId, market);
+        return Objects.hash(fixtureId, market, odds, chance, pickValue);
     }
-
-    /*
-        public static double computePickValue(double odds, double chance){
-        if ( chance == 0 ) return 0;
-        return MathUtils.round((chance/100) - (1/odds), 2);
-    }
-     */
 }

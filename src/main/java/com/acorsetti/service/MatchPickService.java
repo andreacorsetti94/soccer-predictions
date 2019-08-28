@@ -12,4 +12,6 @@ public interface MatchPickService {
     List<MatchPick> picksWithOddsBetween(double lowerBound, double upperBound);
     List<MatchPick> openPicks();
     List<MatchPick> openValuablePicks();
+
+    void savePicks(List<MatchPick> matchPicks);
 }

@@ -23,4 +23,9 @@ public class BetServiceImpl implements BetService {
     public List<Bet> openBets(){
         return this.betRepository.findByProfitIsNull();
     }
+
+    @Override
+    public void saveBets(List<Bet> bets) {
+        this.betRepository.saveAll(bets);
+    }
 }
