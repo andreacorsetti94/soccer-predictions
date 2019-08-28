@@ -1,13 +1,10 @@
 package com.acorsetti.model.jpa;
 
-import com.acorsetti.model.converter.OddsValueAttributeConverter;
+import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.keys.BetCompositeKey;
 import com.acorsetti.model.odds.OddsValue;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 
 @Entity
 @IdClass(BetCompositeKey.class)
@@ -20,7 +17,8 @@ public class Bet {
     private String fixtureId;
 
     @Id
-    private String market;
+    @Enumerated(EnumType.STRING)
+    private MarketValue market;
 
     private Double profit;
     private Double amount;
@@ -30,7 +28,7 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(String algoId, String fixtureId, String market, Double amount, OddsValue odds, Double profit) {
+    public Bet(String algoId, String fixtureId, MarketValue market, Double amount, OddsValue odds, Double profit) {
         this.algoId = algoId;
         this.fixtureId = fixtureId;
         this.market = market;
@@ -39,7 +37,7 @@ public class Bet {
         this.profit = profit;
     }
 
-    public String getMarket(){
+    public MarketValue getMarket(){
         return market;
     }
 

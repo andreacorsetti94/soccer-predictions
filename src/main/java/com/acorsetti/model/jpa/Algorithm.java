@@ -22,4 +22,8 @@ public class Algorithm {
                 "id='" + id + '\'' +
                 '}';
     }
+
+    public String getId() {
+        return id;
+    }
 }
