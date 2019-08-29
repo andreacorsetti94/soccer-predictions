@@ -1,8 +1,11 @@
-package com.acorsetti.service.impl;
+package com.acorsetti.service.impl.probabilities;
 
+import com.acorsetti.model.enums.MarketValue;
 import com.acorsetti.model.eval.*;
-import com.acorsetti.service.ChanceCalculatorService;
-import com.acorsetti.service.FixtureOutcomesEvaluatorService;
+import com.acorsetti.model.jpa.Fixture;
+import com.acorsetti.service.probabilities.FixtureOutcomesEvaluatorService;
+import com.acorsetti.service.FixtureService;
+import com.acorsetti.service.MatchProbabilityCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,10 @@ import java.util.List;
 public class FixtureOutcomesEvaluatorServiceImpl implements FixtureOutcomesEvaluatorService {
 
     @Autowired
-    private ChanceCalculatorService chanceCalculatorService;
+    private MatchProbabilityCalculatorService matchProbabilityCalculatorService;
+
+    @Autowired
+    private FixtureService fixtureService;
 
     /**
      MarketOutcome > > > > > > > > > > OutcomeEvaluation
@@ -21,10 +27,15 @@ public class FixtureOutcomesEvaluatorServiceImpl implements FixtureOutcomesEvalu
     @Override
     public FixtureEvals evaluate(FixtureOutcomes fixtureOutcomes) {
         String fixtureId = fixtureOutcomes.getFixtureId();
+        Fixture fixture = this.fixtureService.byId(fixtureId);
+
+        MatchProbability matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
+
         List<OutcomeEvaluation> outcomeEvaluationList = new ArrayList<>();
 
         for( MarketOutcome marketOutcome: fixtureOutcomes.getMarketOutcomes() ){
-            Chance chance = this.chanceCalculatorService.calculate(fixtureId, marketOutcome);
+            MarketValue marketValue = marketOutcome.getMarketValue();
+            Chance chance = matchProbability.getMarketChance(marketValue);
             OutcomeEvaluation outcomeEvaluation = new OutcomeEvaluation(marketOutcome, chance);
             outcomeEvaluationList.add(outcomeEvaluation);
         }

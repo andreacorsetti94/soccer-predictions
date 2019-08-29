@@ -17,7 +17,7 @@ public class Chance {
     }
 
     public void setValue(double value) {
-        if ( value <= 0 ){
+        if ( value <= 0.01 ){
             this.value = 0.01;
         }
         else if ( value > 1 && value != 100 ) {

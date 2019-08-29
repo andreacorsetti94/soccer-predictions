@@ -1,4 +1,4 @@
-package com.acorsetti.service;
+package com.acorsetti.service.probabilities;
 
 import com.acorsetti.SpringDataApplication;
 import com.acorsetti.config.HibernateConfigTest;
@@ -16,13 +16,14 @@ import javax.transaction.Transactional;
         classes = { HibernateConfigTest.class, SpringDataApplication.class},
         loader = AnnotationConfigContextLoader.class)
 @Transactional
-public class ChanceCalculatorServiceTest {
+public class TeamFormCalculatorServiceTest {
 
     @Autowired
-    private ChanceCalculatorService chanceCalculatorService;
+    private TeamFormCalculatorService teamFormCalculatorService;
 
     @Test
-    public void testCalculationService(){
+    public void test(){
         //TODO
     }
+
 }

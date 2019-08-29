@@ -54,7 +54,7 @@ public enum MarketValue {
      * @param representation
      * @return
      */
-    public MarketValue byRepresentation(String representation){
+    public static MarketValue byRepresentation(String representation){
         for(MarketValue mv: MarketValue.values()){
             if ( mv.getRepresentation().equals(representation) ) return mv;
         }
@@ -66,9 +66,9 @@ public enum MarketValue {
      * @param name in the format of (i.e. 'U4,5', 'HDA_HOME', etc.)
      * @return
      */
-    public MarketValue byName(String name){
+    public static MarketValue byName(String name){
         for(MarketValue mv: MarketValue.values()){
-            if ( mv.toString().equals(representation) ) return mv;
+            if ( mv.toString().equals(name) ) return mv;
         }
         return MarketValue.EMPTY_MARKET_VALUE;
     }
