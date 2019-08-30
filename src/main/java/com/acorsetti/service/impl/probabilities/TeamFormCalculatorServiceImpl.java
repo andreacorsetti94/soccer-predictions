@@ -1,5 +1,6 @@
 package com.acorsetti.service.impl.probabilities;
 
+import com.acorsetti.model.eval.TeamsForm;
 import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.service.FixtureService;
 import com.acorsetti.service.probabilities.TeamFormCalculatorService;
@@ -11,14 +12,14 @@ import java.util.List;
 @Service
 public class TeamFormCalculatorServiceImpl implements TeamFormCalculatorService {
 
-    private double homeForm;
-    private double awayForm;
-
     @Autowired
     private FixtureService fixtureService;
 
 
-    public void calculateTeamsForm(String homeTeamId, String awayTeamId, List<Fixture> lastHomeTeamMatches,  List<Fixture> lastAwayTeamMatches){
+    public TeamsForm calculateTeamsForm(String homeTeamId, String awayTeamId, List<Fixture> lastHomeTeamMatches, List<Fixture> lastAwayTeamMatches){
+        double homeForm = 0.0;
+        double awayForm = 0.0;
+
         int homeMatchesCount = 0;
         int awayMatchesCount = 0;
 
@@ -44,7 +45,6 @@ public class TeamFormCalculatorServiceImpl implements TeamFormCalculatorService 
         if (awayMatchesCount != 0) {
             awayForm = awayForm / awayMatchesCount;
         }
+        return new TeamsForm(homeForm,awayForm);
     }
-    public double getHomeForm() { return homeForm; }
-    public double getAwayForm() { return awayForm; }
 }

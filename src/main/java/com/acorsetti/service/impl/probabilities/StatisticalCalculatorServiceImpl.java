@@ -1,6 +1,8 @@
 package com.acorsetti.service.impl.probabilities;
 
 import com.acorsetti.model.eval.GoalExpectancy;
+import com.acorsetti.model.eval.TeamsForm;
+import com.acorsetti.model.eval.TeamsStrength;
 import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.service.FixtureService;
 import com.acorsetti.service.probabilities.StatisticalCalculatorService;
@@ -27,24 +29,26 @@ public class StatisticalCalculatorServiceImpl implements StatisticalCalculatorSe
 
     @Override
     public GoalExpectancy calculateExpectancy(Fixture fixture) {
+        if ( fixture == null ) throw new IllegalArgumentException("Fixture Argument is null!");
+
         String homeTeamId = fixture.getHomeTeamId();
         String awayTeamId = fixture.getAwayTeamId();
 
         List<Fixture> lastHomeTeamMatches = this.fixtureService.lastTeamMatches(homeTeamId, MATCHES_TO_CONSIDER);
         List<Fixture> lastAwayTeamMatches = this.fixtureService.lastTeamMatches(awayTeamId, MATCHES_TO_CONSIDER);
 
-        this.teamStrengthAnalyzerService.analyzeStrengths(homeTeamId, awayTeamId, lastHomeTeamMatches, lastAwayTeamMatches);
+        TeamsStrength ts = this.teamStrengthAnalyzerService.analyzeStrengths(homeTeamId, awayTeamId, lastHomeTeamMatches, lastAwayTeamMatches);
 
-        double homeAttackStrength = this.teamStrengthAnalyzerService.getHomeAttackStrength();
-        double awayAttackStrength = this.teamStrengthAnalyzerService.getAwayAttackStrength();
+        double homeAttackStrength = ts.getHomeAttackStrength();
+        double awayAttackStrength = ts.getAwayAttackStrenth();
 
-        double homeDefenceStrength = this.teamStrengthAnalyzerService.getHomeDefenceStrength();
-        double awayDefenceStrength = this.teamStrengthAnalyzerService.getAwayDefenceStrength();
+        double homeDefenceStrength = ts.getHomeDefenceStrength();
+        double awayDefenceStrength = ts.getAwayDefenceStrenth();
 
 
-        this.teamFormCalculatorService.calculateTeamsForm(homeTeamId,awayTeamId,lastHomeTeamMatches,lastAwayTeamMatches);
-        double homeTeamForm = this.teamFormCalculatorService.getHomeForm();
-        double awayTeamForm = this.teamFormCalculatorService.getAwayForm();
+        TeamsForm tf = this.teamFormCalculatorService.calculateTeamsForm(homeTeamId,awayTeamId,lastHomeTeamMatches,lastAwayTeamMatches);
+        double homeTeamForm = tf.getHomeTeamForm();
+        double awayTeamForm = tf.getAwayTeamForm();
 
         double hge = homeAttackStrength * awayDefenceStrength;
         double age = awayAttackStrength * homeDefenceStrength;

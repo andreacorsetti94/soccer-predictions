@@ -70,7 +70,7 @@ public class FixtureServiceTest {
             i++;
         }
 
-        //test null leagueId list
+        //testLegitHomeFavouriteGoalExpectancy null leagueId list
         lastMatches = this.fixtureService.lastTeamMatches(teamId,numOfMatches);
         assertTrue(lastMatches.size() <= numOfMatches && lastMatches.size() > 0);
 

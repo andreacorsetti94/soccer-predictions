@@ -18,6 +18,8 @@ public class ExactScoreProbabilityCalculatorServiceImpl implements ExactScorePro
     private PoissonCalculatorService poissonCalculatorService;
 
     public Map<MarketValue, Chance> calculate(GoalExpectancy goalExpectancy){
+        if ( goalExpectancy == null ) return new HashMap<>();
+
         Map<MarketValue, Chance> exactScoresChances = new HashMap<>();
         double otherChance = 0;
 

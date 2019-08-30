@@ -1,5 +1,6 @@
 package com.acorsetti.service.impl.probabilities;
 
+import com.acorsetti.model.eval.TeamsStrength;
 import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.service.TeamService;
 import com.acorsetti.service.probabilities.TeamStrengthAnalyzerService;
@@ -11,15 +12,14 @@ import java.util.List;
 @Service
 public class TeamStrengthAnalyzerServiceImpl implements TeamStrengthAnalyzerService {
 
-    private double homeAttackStrength;
-    private double awayAttackStrength;
-    private double homeDefenceStrength;
-    private double awayDefenceStrength;
-
     @Autowired
     private TeamService teamService;
 
-    public void analyzeStrengths(String homeTeamId, String awayTeamId, List<Fixture> lastHomeTeamMatches, List<Fixture> lastAwayTeamMatches){
+    public TeamsStrength analyzeStrengths(String homeTeamId, String awayTeamId, List<Fixture> lastHomeTeamMatches, List<Fixture> lastAwayTeamMatches){
+        double homeAttackStrength;
+        double awayAttackStrength;
+        double homeDefenceStrength;
+        double awayDefenceStrength;
 
         double avgHomeTeamGoalsFor = this.teamService.avgGoalsScored(homeTeamId,lastHomeTeamMatches);
         double avgHomeTeamGoalsConceived = this.teamService.avgGoalsConceived(homeTeamId, lastHomeTeamMatches);
@@ -29,14 +29,26 @@ public class TeamStrengthAnalyzerServiceImpl implements TeamStrengthAnalyzerServ
         double avgGoalsScored = (avgAwayTeamGoalsFor + avgHomeTeamGoalsFor) / 2;
         double avgGoalsConceived = (avgAwayTeamGoalsConceived + avgHomeTeamGoalsConceived) / 2;
 
-        homeAttackStrength = avgHomeTeamGoalsFor / avgGoalsScored;
-        awayAttackStrength = avgAwayTeamGoalsFor / avgGoalsScored;
-        homeDefenceStrength = avgHomeTeamGoalsConceived / avgGoalsConceived;
-        awayDefenceStrength = avgAwayTeamGoalsConceived / avgGoalsConceived;
+        if ( avgGoalsScored == 0.0 ){
+            homeAttackStrength = 0.0;
+            awayAttackStrength = 0.0;
+        }
+        else{
+            homeAttackStrength = avgHomeTeamGoalsFor / avgGoalsScored;
+            awayAttackStrength = avgAwayTeamGoalsFor / avgGoalsScored;
+        }
+
+        if ( avgGoalsConceived == 0.0 ){
+            homeDefenceStrength = 0.0;
+            awayDefenceStrength = 0.0;
+        }
+        else{
+            homeDefenceStrength = avgHomeTeamGoalsConceived / avgGoalsConceived;
+            awayDefenceStrength = avgAwayTeamGoalsConceived / avgGoalsConceived;
+        }
+
+
+        return new TeamsStrength(homeAttackStrength, homeDefenceStrength, awayAttackStrength, awayDefenceStrength);
     }
 
-    public double getHomeAttackStrength() { return homeAttackStrength; }
-    public double getAwayAttackStrength() { return awayAttackStrength; }
-    public double getHomeDefenceStrength() { return homeDefenceStrength; }
-    public double getAwayDefenceStrength() { return awayDefenceStrength; }
 }

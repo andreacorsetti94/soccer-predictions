@@ -25,6 +25,10 @@ public class PoissonCalculatorServiceImpl implements PoissonCalculatorService {
 
     @Override
     public MatchProbability calculateOutcomesProbabilities(Fixture fixture, GoalExpectancy matchGoalExpectancy) {
+        if ( fixture == null || matchGoalExpectancy == null ) {
+            throw  new IllegalArgumentException("Fixture or GoalExpectancy is null. IllegalArguments!");
+        }
+
         Map<MarketValue, Chance> exactScoresProbabilities = this.exactScoreProbabilityCalculatorService.calculate(matchGoalExpectancy);
 
         Chance over1_5 = this.marketValuesPoissonMapperService.computeOver(exactScoresProbabilities,1);

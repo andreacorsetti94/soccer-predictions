@@ -5,5 +5,5 @@ import com.acorsetti.model.jpa.Fixture;
 
 public interface MatchProbabilityCalculatorService {
 
-    MatchProbability calculateProbability(Fixture fixture);
+    MatchProbability calculateProbability(Fixture fixture) throws IllegalArgumentException;
 }

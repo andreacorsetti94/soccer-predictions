@@ -3,6 +3,7 @@ package com.acorsetti.model.eval;
 import java.util.Objects;
 
 public class GoalExpectancy {
+    private static final double MIN_LEGIT_VALUE = 0.3;
 
     private double homeValue;
     private double awayValue;
@@ -21,11 +22,21 @@ public class GoalExpectancy {
     }
 
     public void setHomeValue(double homeValue) {
-        this.homeValue = homeValue;
+        if ( homeValue <= MIN_LEGIT_VALUE ){
+            this.homeValue = MIN_LEGIT_VALUE;
+        }
+        else{
+            this.homeValue = homeValue;
+        }
     }
 
     public void setAwayValue(double awayValue) {
-        this.awayValue = awayValue;
+        if ( awayValue <= MIN_LEGIT_VALUE ){
+            this.awayValue = MIN_LEGIT_VALUE;
+        }
+        else{
+            this.awayValue = awayValue;
+        }
     }
 
     @Override
