@@ -26,6 +26,13 @@ public class Country {
         this.countryName = countryName;
     }
 
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
 
     @Override
     public String toString() {

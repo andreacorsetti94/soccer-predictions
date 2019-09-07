@@ -1,16 +1,22 @@
 package com.acorsetti.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -20,7 +26,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.acorsetti.repository")
 @PropertySource("classpath:hibernate.properties")
-public class HibernateConfig {
+public class ApplicationConfig {
 
     @Autowired
     private Environment env;
@@ -61,4 +67,26 @@ public class HibernateConfig {
         return hibernateProperties;
     }
 
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
+    public ObjectMapper jacksonObjectMapper(){
+        return new ObjectMapper();
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
+    @Bean
+    public HttpEntity httpEntity(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("X-RapidAPI-Key",env.getProperty("api.football.key"));
+
+        return new HttpEntity<>("parameters",httpHeaders);
+    }
 }

@@ -1,0 +1,74 @@
+DOC: https://www.api-football.com/documentation
+Dashboard: https://rapidapi.com/developer/dashboard
+
+countries:
+https://api-football-v1.p.rapidapi.com/countries
+
+fixtures by date:
+https://api-football-v1.p.rapidapi.com/fixtures/date/2019-08-31
+
+live fixtures:
+https://api-football-v1.p.rapidapi.com/fixtures/live
+
+all matches by league:
+https://api-football-v1.p.rapidapi.com/fixtures/league/98
+
+all matches by team:
+https://api-football-v1.p.rapidapi.com/fixtures/team/505
+
+match by fixture id:
+https://api-football-v1.p.rapidapi.com/fixtures/id/39197
+
+matches by h2h:
+https://api-football-v1.p.rapidapi.com/fixtures/h2h/505/498
+
+all leagues:
+https://api-football-v1.p.rapidapi.com/leagues
+
+leagues by id:
+https://api-football-v1.p.rapidapi.com/leagues/league/1
+
+leagues by season year:
+https://api-football-v1.p.rapidapi.com/leagues/season/2019
+
+leagues by country name for all seasons: (anche per country code funziona!)
+https://api-football-v1.p.rapidapi.com/leagues/country/italy
+https://api-football-v1.p.rapidapi.com/leagues/country/it
+
+leagues by country name for season: (anche per country code funziona!)
+https://api-football-v1.p.rapidapi.com/leagues/country/italy/2019
+
+odds by fixture id:
+https://api-football-v1.p.rapidapi.com/odds/208935
+{ JSON: {"api":{"odds":{"MT/FM (FullTime)":{"1/N":{"pos":"2","label":"1/N","odd":"16.50"},"N/2":{"pos":"6","label":"N/2","odd":"12.00"},"N/1":{"pos":"4","label":"N/1","odd":"4.60"},"2/N":{"pos":"8","label":"2/N","odd":"17.00"},"1/1":{"pos":"1","label":"1/1","odd":"1.75"},"1/2":{"pos":"3","label":"1/2","odd":"30.00"},"2/1":{"pos":"7","label":"2/1","odd":"17.50"},"2/2":{"pos":"9","label":"2/2","odd":"9.00"},"N/N":{"pos":"5","label":"N/N","odd":"7.25"}},"Half Time":{"1":{"pos":"1","label":"1","odd":"1.68"},"2":{"pos":"3","label":"2","odd":"4.80"},"N":{"pos":"2","label":"N","odd":"2.50"}},"Win the match":{"1":{"pos":"1","label":"1","odd":"1.42"},"2":{"pos":"3","label":"2","odd":"5.80"},"N":{"pos":"2","label":"N","odd":"4.75"}},"Over/Under 2,5 goals (FullTime)":{"Over 2,5":{"pos":"1","label":"Over 2,5","odd":"1.30"},"Under 2,5":{"pos":"2","label":"Under 2,5","odd":"2.45"}},"Double chance (FullTime)":{"1/N":{"pos":"1","label":"1/N","odd":"1.07"},"N/2":{"pos":"2","label":"N/2","odd":"2.55"},"1/2":{"pos":"3","label":"1/2","odd":"1.12"}},"Score exact (FullTime)":{"2 - 0":{"pos":"2","label":"2 - 0","odd":"6.50"},"3 - 4":{"pos":"25","label":"3 - 4","odd":"129.00"},"3 - 1":{"pos":"5","label":"3 - 1","odd":"7.50"},"3 - 0":{"pos":"4","label":"3 - 0","odd":"6.75"},"1 - 1":{"pos":"12","label":"1 - 1","odd":"8.50"},"3 - 3":{"pos":"14","label":"3 - 3","odd":"36.00"},"1 - 0":{"pos":"1","label":"1 - 0","odd":"7.75"},"3 - 2":{"pos":"6","label":"3 - 2","odd":"13.50"},"1 - 3":{"pos":"20","label":"1 - 3","odd":"42.00"},"1 - 2":{"pos":"18","label":"1 - 2","odd":"17.50"},"1 - 4":{"pos":"23","label":"1 - 4","odd":"150.00"},"2 - 4":{"pos":"24","label":"2 - 4","odd":"117.00"},"2 - 3":{"pos":"21","label":"2 - 3","odd":"32.00"},"2 - 2":{"pos":"13","label":"2 - 2","odd":"13.50"},"2 - 1":{"pos":"3","label":"2 - 1","odd":"7.25"},"0 - 4":{"pos":"22","label":"0 - 4","odd":"100.00"},"0 - 3":{"pos":"19","label":"0 - 3","odd":"80.00"},"4 - 2":{"pos":"9","label":"4 - 2","odd":"21.00"},"4 - 1":{"pos":"8","label":"4 - 1","odd":"12.00"},"4 - 0":{"pos":"7","label":"4 - 0","odd":"14.50"},"0 - 2":{"pos":"17","label":"0 - 2","odd":"37.00"},"0 - 1":{"pos":"16","label":"0 - 1","odd":"18.50"},"0 - 0":{"pos":"11","label":"0 - 0","odd":"18.50"},"4 - 4":{"pos":"15","label":"4 - 4","odd":"150.00"},"4 - 3":{"pos":"10","label":"4 - 3","odd":"55.00"},"Other":{"pos":"26","label":"Other","odd":"5.25"}},"Handicap [0:1] (FullTime)":{"1":{"pos":"1","label":"1","odd":"1.88"},"2":{"pos":"3","label":"2","odd":"2.55"},"N":{"pos":"2","label":"N","odd":"3.60"}}},"results":7}} }
+
+all seasons:
+https://api-football-v1.p.rapidapi.com/seasons
+
+standings by league:
+https://api-football-v1.p.rapidapi.com/leagueTable/1
+
+statistics by league and team (serie a - inter)
+https://api-football-v1.p.rapidapi.com/statistics/713/505
+
+team by id:
+https://api-football-v1.p.rapidapi.com/teams/team/505
+
+teams by league id:
+https://api-football-v1.p.rapidapi.com/teams/league/713
+
+/* -------------------------------------- NUOVI ------------------------------------- */
+league rounds:
+https://api-football-v1.p.rapidapi.com/v2/fixtures/rounds/713
+
+all fixtures by league id and by date:
+https://api-football-v1.p.rapidapi.com/v2/fixtures/leagues/713/2019-06-31
+
+live fixtures by league id:
+https://api-football-v1.p.rapidapi.com/v2/fixtures/live/713
+
+all fixtures for a team filtered by league: (?)
+https://api-football-v1.p.rapidapi.com/v2/fixtures/team/505/713
+
+all fixtures by league id for a round
+https://api-football-v1.p.rapidapi.com/v2/fixtures/leagues/713/round1
