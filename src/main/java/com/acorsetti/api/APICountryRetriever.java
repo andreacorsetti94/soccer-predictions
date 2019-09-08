@@ -1,7 +1,7 @@
 package com.acorsetti.api;
 
-import com.acorsetti.api.response.CountryResponse;
+import com.acorsetti.model.jpa.Country;
 
-public interface APICountryRetriever extends APIRetriever {
-    CountryResponse allCountriesByAPI();
+public interface APICountryRetriever {
+    APIResponse<Country> allCountriesByAPI();
 }

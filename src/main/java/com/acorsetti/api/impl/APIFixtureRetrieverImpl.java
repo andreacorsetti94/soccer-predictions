@@ -1,11 +1,11 @@
 package com.acorsetti.api.impl;
 
-import com.acorsetti.api.APICountryRetriever;
-import com.acorsetti.api.RestTemplateService;
-import com.acorsetti.api.json.JSONCountryResponse;
+import com.acorsetti.api.APIFixtureRetriever;
 import com.acorsetti.api.APIResponse;
-import com.acorsetti.model.dto.CountryDto;
-import com.acorsetti.model.jpa.Country;
+import com.acorsetti.api.RestTemplateService;
+import com.acorsetti.api.json.JSONFixtureResponse;
+import com.acorsetti.model.dto.FixtureDto;
+import com.acorsetti.model.jpa.Fixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
@@ -21,32 +21,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Configuration
 @PropertySource("classpath:endpoints.properties")
-public class APICountryRetrieverImpl implements APICountryRetriever {
-
+@PropertySource("classpath:application.properties")
+public class APIFixtureRetrieverImpl implements APIFixtureRetriever {
     private static final Logger logger = Logger.getLogger(APICountryRetrieverImpl.class);
+
+    @Autowired
+    private Environment environment;
 
     @Autowired
     private RestTemplateService<JsonNode> restTemplateService;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    private Environment env;
+    private ModelMapper modelMapper;
 
     @Override
-    public APIResponse<Country> allCountriesByAPI() {
+    public APIResponse<Fixture> fixturesByDay(LocalDate localDate) {
+        String url = this.environment.getProperty("fixturesByDay");
+        String format = this.environment.getProperty("fixture.date.format");
+        if ( format == null ){
+            logger.error("couldnt read application property: fixture.date.format. Cannot proceed.");
+            return new APIResponse<>(HttpStatus.SERVICE_UNAVAILABLE, 0, Collections.emptyList());
+        }
 
-        String url = env.getProperty("allCountries");
+        String date = localDate.format(DateTimeFormatter.ofPattern(format));
+        url = Objects.requireNonNull(url).replace("<date>", date);
+
         ResponseEntity<JsonNode> responseEntity;
         try{
             responseEntity = this.restTemplateService.makeGetRestCall(url, JsonNode.class);
@@ -59,7 +70,6 @@ public class APICountryRetrieverImpl implements APICountryRetriever {
             logger.error("Generic Exception for this call: " + url + " Exception: " + ex1.toString(),ex1);
             return new APIResponse<>(HttpStatus.SERVICE_UNAVAILABLE, 0, Collections.emptyList());
         }
-
         HttpStatus statusCode = responseEntity.getStatusCode();
         if ( statusCode != HttpStatus.OK ){
             logger.warn("HttpStatus for this call: " + url + " was: " + responseEntity.getStatusCode());
@@ -72,13 +82,12 @@ public class APICountryRetrieverImpl implements APICountryRetriever {
             return new APIResponse<>(statusCode, 0, Collections.emptyList());
         }
 
-        //map JsonNode instance to concrete json response entity
-        JSONCountryResponse jsonCountryResponse = objectMapper.convertValue(body, JSONCountryResponse.class);
-        List<CountryDto> dtoCountries = jsonCountryResponse.getCountryDtos();
-        Type countryType = new TypeToken<List<Country>>(){}.getType();
+        JSONFixtureResponse jsonFixtureResponse = this.objectMapper.convertValue(body, JSONFixtureResponse.class);
+        List<FixtureDto> fixtureDtoList = jsonFixtureResponse.getFixtureDtoList();
+        int results = jsonFixtureResponse.getResults();
+        Type type = new TypeToken<List<Fixture>>(){}.getType();
 
-        //map json response entity to model
-        List<Country> countryList = modelMapper.map(dtoCountries, countryType);
-        return new APIResponse<>(statusCode, jsonCountryResponse.getResults(), countryList);
+        List<Fixture> fixtures = this.modelMapper.map(fixtureDtoList, type);
+        return new APIResponse<>(statusCode, results, fixtures);
     }
 }

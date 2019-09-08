@@ -1,16 +1,18 @@
-package com.acorsetti.api.response;
+package com.acorsetti.api;
 
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public abstract class APIResponse<T> {
+public class APIResponse<T> {
     private int results;
     private HttpStatus response;
+    private List<T> entityList;
 
-    APIResponse(HttpStatus response, int results) {
+    public APIResponse(HttpStatus response, int results, List<T> entityList) {
         this.response = response;
         this.results = results;
+        this.entityList = entityList;
     }
 
     public HttpStatus getResponse() {
@@ -19,5 +21,5 @@ public abstract class APIResponse<T> {
     public int getResults() {
         return results;
     }
-    public abstract List<T> getBody();
+    public List<T> getBody(){ return entityList; }
 }

@@ -138,6 +138,82 @@ public class Fixture {
         return secondHalfStart;
     }
 
+    public void setFixtureId(String fixtureId) {
+        this.fixtureId = fixtureId;
+    }
+
+    public void setEventTimestamp(String eventTimestamp) {
+        this.eventTimestamp = eventTimestamp;
+    }
+
+    public void setEventDate(LocalDateTime eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public void setLeagueId(String leagueId) {
+        this.leagueId = leagueId;
+    }
+
+    public void setRound(String round) {
+        this.round = round;
+    }
+
+    public void setHomeTeamId(String homeTeamId) {
+        this.homeTeamId = homeTeamId;
+    }
+
+    public void setAwayTeamId(String awayTeamId) {
+        this.awayTeamId = awayTeamId;
+    }
+
+    public void setHomeTeamName(String homeTeamName) {
+        this.homeTeamName = homeTeamName;
+    }
+
+    public void setAwayTeamName(String awayTeamName) {
+        this.awayTeamName = awayTeamName;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setStatusShort(String statusShort) {
+        this.statusShort = statusShort;
+    }
+
+    public void setGoalsHomeTeam(String goalsHomeTeam) {
+        this.goalsHomeTeam = goalsHomeTeam;
+    }
+
+    public void setGoalsAwayTeam(String goalsAwayTeam) {
+        this.goalsAwayTeam = goalsAwayTeam;
+    }
+
+    public void setHalfTimeScore(String halfTimeScore) {
+        this.halfTimeScore = halfTimeScore;
+    }
+
+    public void setFinalScore(String finalScore) {
+        this.finalScore = finalScore;
+    }
+
+    public void setPenalty(String penalty) {
+        this.penalty = penalty;
+    }
+
+    public void setElapsed(String elapsed) {
+        this.elapsed = elapsed;
+    }
+
+    public void setFirstHalfStart(String firstHalfStart) {
+        this.firstHalfStart = firstHalfStart;
+    }
+
+    public void setSecondHalfStart(String secondHalfStart) {
+        this.secondHalfStart = secondHalfStart;
+    }
+
     @Override
     public String toString() {
 
