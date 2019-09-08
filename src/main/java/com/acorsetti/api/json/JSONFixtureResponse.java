@@ -4,37 +4,17 @@ import com.acorsetti.model.dto.FixtureDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class JSONFixtureResponse {
-    private int results;
-    private List<FixtureDto> fixtureDtoList;
+public class JSONFixtureResponse extends JsonResponse<FixtureDto>{
 
     public JSONFixtureResponse(int results, List<FixtureDto> fixtureDtoList) {
-        this.results = results;
-        this.fixtureDtoList = fixtureDtoList;
+        super(results,fixtureDtoList);
     }
 
     public JSONFixtureResponse() {
-    }
-
-    public int getResults() {
-        return results;
-    }
-
-    public void setResults(int results) {
-        this.results = results;
-    }
-
-    public List<FixtureDto> getFixtureDtoList() {
-        return fixtureDtoList;
-    }
-
-    public void setFixtureDtoList(List<FixtureDto> fixtureDtoList) {
-        this.fixtureDtoList = fixtureDtoList;
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +22,7 @@ public class JSONFixtureResponse {
     private void unpackNested(Map<String,Object> fixtureMap){
         Map<String,Object> fixturesKeys = (Map<String,Object>) fixtureMap.get("fixtures");
 
-        this.fixtureDtoList = new ArrayList<>();
+        super.setDataList(new ArrayList<>());
         fixturesKeys.forEach( (key, fixture) -> {
             Map<String,String> fixtureProperties = (Map<String,String>) fixture;
             String id = fixtureProperties.get("fixture_id");
@@ -65,13 +45,12 @@ public class JSONFixtureResponse {
             String secondHalfStart = fixtureProperties.get("secondHalfStart");
 
             String event_date = fixtureProperties.get("event_date");
-            
-            //TODO configura env
+
             LocalDateTime dateTime = LocalDateTime.parse(event_date.substring(0,19));
-            this.fixtureDtoList.add(new FixtureDto(id,event_timestamp, dateTime, league_id, round, homeTeam_id,
+            super.getDataList().add(new FixtureDto(id,event_timestamp, dateTime, league_id, round, homeTeam_id,
                     awayTeam_id, homeTeam, awayTeam, status, statusShort, goalsHomeTeam, goalsAwayTeam, halftime_score,
                     final_score, penalty, elapsed, firstHalfStart, secondHalfStart));
         });
-        this.results = this.fixtureDtoList.size();
+        super.setResults(super.getDataList().size());
     }
 }
