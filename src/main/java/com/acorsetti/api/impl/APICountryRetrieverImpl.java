@@ -24,7 +24,7 @@ public class APICountryRetrieverImpl implements APICountryRetriever {
     private RemoteDataRetriever<Country, JSONCountryResponse, CountryDto> remoteDataRetriever;
 
     @Override
-    public APIResponse<Country> allCountriesByAPI() {
+    public APIResponse<Country> allCountries() {
         String url = env.getProperty("allCountries");
         return this.remoteDataRetriever.retrieve(url, JSONCountryResponse.class, Country.class);
     }

@@ -57,6 +57,34 @@ public class League {
         this.seasonLogoUrl = seasonLogoUrl;
     }
 
+    public void setLeagueId(String leagueId) {
+        this.leagueId = leagueId;
+    }
+
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public void setSeasonYear(String seasonYear) {
+        this.seasonYear = seasonYear;
+    }
+
+    public void setSeasonStartDate(String seasonStartDate) {
+        this.seasonStartDate = seasonStartDate;
+    }
+
+    public void setSeasonEndDate(String seasonEndDate) {
+        this.seasonEndDate = seasonEndDate;
+    }
+
+    public void setSeasonLogoUrl(String seasonLogoUrl) {
+        this.seasonLogoUrl = seasonLogoUrl;
+    }
+
     @Override
     public String toString() {
         return "League{" +

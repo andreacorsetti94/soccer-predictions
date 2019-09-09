@@ -72,14 +72,88 @@ public class FixtureApiRetrieverTest {
     public void testFixturesByDate(){
         LocalDate localDate = LocalDate.of(2019,8,31);
         String format = this.environment.getProperty("fixture.date.format");
-        String url = this.environment.getProperty("fixturesByDay").replace("<date>", localDate.format(DateTimeFormatter.ofPattern(format)));
-
+        String endpoint = this.environment.getProperty("fixturesByDay").replace("<date>", localDate.format(DateTimeFormatter.ofPattern(format)));
         mockServer
-                .expect(requestTo(url))
+                .expect(requestTo(endpoint))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
 
-        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.fixturesByDay(localDate);
+        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.byDay(localDate);
+        this.checkMockServerResponse(apiResponse);
+    }
+
+    @Test
+    public void testLiveFixtures(){
+        String endpoint = this.environment.getProperty("liveFixtures");
+        mockServer
+                .expect(requestTo(endpoint))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
+
+        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.live();
+        this.checkMockServerResponse(apiResponse);
+    }
+
+    @Test
+    public void testByLeague(){
+        String leagueId = "584";
+        String endpoint = this.environment.getProperty("fixturesByLeague").replace("<leagueId>",leagueId);
+
+        mockServer
+                .expect(requestTo(endpoint))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
+
+        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.byLeague(leagueId);
+        this.checkMockServerResponse(apiResponse);
+    }
+
+    @Test
+    public void testByTeam(){
+        String teamId = "505";
+        String endpoint = this.environment.getProperty("fixturesByTeam").replace("<teamId>", teamId);
+
+        mockServer
+                .expect(requestTo(endpoint))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
+
+        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.byTeam(teamId);
+        this.checkMockServerResponse(apiResponse);
+    }
+
+    @Test
+    public void testById(){
+        String id = "1000";
+        String endpoint = this.environment.getProperty("fixturesById").replace("<id>", id);
+
+        mockServer
+                .expect(requestTo(endpoint))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
+
+        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.byId(id);
+        this.checkMockServerResponse(apiResponse);
+    }
+
+    @Test
+    public void testByH2H(){
+        String teamOne = "505";
+        String teamTwo = "504";
+        String endpoint = this.environment.getProperty("fixturesByH2H")
+                .replace("<teamOne>", teamOne)
+                .replace("<teamTwo>", teamTwo);
+        mockServer
+                .expect(requestTo(endpoint))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
+
+        APIResponse<Fixture> apiResponse = this.apiFixtureRetriever.byH2H(teamOne, teamTwo);
+        this.checkMockServerResponse(apiResponse);
+    }
+
+    private void checkMockServerResponse(APIResponse<Fixture> apiResponse){
+
         assertEquals(200, apiResponse.getResponse().value());
         assertEquals(2, apiResponse.getResults());
         Fixture one = apiResponse.getBody().get(0);
@@ -112,6 +186,5 @@ public class FixtureApiRetrieverTest {
         assertEquals("FT",two.getStatusShort());
         assertEquals("Apertura - 5",two.getRound());
         assertEquals("2 - 2",two.getFinalScore());
-
     }
 }

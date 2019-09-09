@@ -22,6 +22,6 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Override
 	public void run(String args[]) {
 
-		System.out.println(this.apiFixtureRetriever.fixturesByDay(LocalDate.of(2019, Month.AUGUST, 31)).getBody());
+		System.out.println(this.apiFixtureRetriever.byDay(LocalDate.of(2019, Month.AUGUST, 31)).getBody());
 	}
 }

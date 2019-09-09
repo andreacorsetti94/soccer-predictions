@@ -64,7 +64,7 @@ public class CountryApiRetrieverTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(legalJson, MediaType.APPLICATION_JSON));
 
-        APIResponse<Country> countryResponse = this.apiCountryRetriever.allCountriesByAPI();
+        APIResponse<Country> countryResponse = this.apiCountryRetriever.allCountries();
         assertEquals(200, countryResponse.getResponse().value());
 
         assertEquals(3, countryResponse.getResults());
