@@ -48,7 +48,7 @@ https://api-football-v1.p.rapidapi.com/seasons
 standings by league:
 https://api-football-v1.p.rapidapi.com/leagueTable/1
 
-statistics by league and team (serie a - inter)
+statistics by league and team (serie a - inter) !!!! (unused)
 https://api-football-v1.p.rapidapi.com/statistics/713/505
 
 team by id:

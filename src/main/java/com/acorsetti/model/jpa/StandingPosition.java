@@ -102,6 +102,58 @@ public class StandingPosition {
 
     public String getLeagueId(){ return this.leagueId; }
 
+    public void setLeagueId(String leagueId) {
+        this.leagueId = leagueId;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setPlayed(int played) {
+        this.played = played;
+    }
+
+    public void setWon(int won) {
+        this.won = won;
+    }
+
+    public void setDraw(int draw) {
+        this.draw = draw;
+    }
+
+    public void setLost(int lost) {
+        this.lost = lost;
+    }
+
+    public void setGoalsFor(int goalsFor) {
+        this.goalsFor = goalsFor;
+    }
+
+    public void setGoalsAgainst(int goalsAgainst) {
+        this.goalsAgainst = goalsAgainst;
+    }
+
+    public void setGoalsDiff(int goalsDiff) {
+        this.goalsDiff = goalsDiff;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public void setLastUpd(LocalDate lastUpd) {
+        this.lastUpd = lastUpd;
+    }
+
     @Override
     public String toString() {
         return "StandingPosition{" +
