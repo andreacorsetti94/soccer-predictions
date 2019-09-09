@@ -24,4 +24,8 @@ public class Season {
                 "year='" + year + '\'' +
                 '}';
     }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 }

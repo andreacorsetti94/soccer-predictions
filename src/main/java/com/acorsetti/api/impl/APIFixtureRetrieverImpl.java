@@ -25,7 +25,7 @@ import java.util.Objects;
 @PropertySource("classpath:application.properties")
 public class APIFixtureRetrieverImpl implements APIFixtureRetriever {
 
-    private static final Logger logger = Logger.getLogger(APICountryRetrieverImpl.class);
+    private static final Logger logger = Logger.getLogger(APIFixtureRetrieverImpl.class);
 
     @Autowired
     private Environment environment;
