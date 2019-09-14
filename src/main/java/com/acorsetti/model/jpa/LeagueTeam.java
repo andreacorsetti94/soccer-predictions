@@ -31,6 +31,14 @@ public class LeagueTeam {
         return teamId;
     }
 
+    public void setLeagueId(String leagueId) {
+        this.leagueId = leagueId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
     @Override
     public String toString() {
         return "LeagueTeam{" +

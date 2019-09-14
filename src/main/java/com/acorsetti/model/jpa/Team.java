@@ -27,6 +27,18 @@ public class Team {
         return imgUrl;
     }
 
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public Team(String teamId, String teamName, String imgUrl) {
         this.teamId = teamId;
         this.teamName = teamName;
