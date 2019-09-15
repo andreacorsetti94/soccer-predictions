@@ -6,6 +6,7 @@ import com.acorsetti.model.jpa.StandingPosition;
 import com.acorsetti.repository.LeagueRepository;
 import com.acorsetti.repository.StandingPositionRepository;
 import com.acorsetti.updater.StandingUpdater;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 @PropertySource("classpath:scheduler.properties")
 public class StandingUpdaterImpl implements StandingUpdater {
+    private static final Logger logger = Logger.getLogger(StandingUpdaterImpl.class);
 
     @Autowired
     private StandingPositionRepository standingPositionRepository;

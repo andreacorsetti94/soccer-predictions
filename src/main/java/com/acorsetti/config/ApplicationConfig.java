@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
@@ -23,6 +24,7 @@ import java.util.Properties;
 
 
 @Configuration
+@EnableScheduling
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.acorsetti.repository")
 @PropertySource("classpath:hibernate.properties")

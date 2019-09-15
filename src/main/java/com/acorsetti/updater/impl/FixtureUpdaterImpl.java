@@ -4,6 +4,7 @@ import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.repository.FixtureRepository;
 import com.acorsetti.service.FixtureService;
 import com.acorsetti.updater.FixtureUpdater;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,6 +18,7 @@ import java.util.List;
 @Service
 @PropertySource("classpath:scheduler.properties")
 public class FixtureUpdaterImpl implements FixtureUpdater {
+    private static final Logger logger = Logger.getLogger(FixtureUpdaterImpl.class);
 
     @Autowired
     private FixtureRepository fixtureRepository;

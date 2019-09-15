@@ -1,6 +1,7 @@
 package com.acorsetti;
 
 import com.acorsetti.api.APIFixtureRetriever;
+import com.acorsetti.updater.SeasonUpdater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,12 +17,7 @@ public class SpringDataApplication implements CommandLineRunner {
 		SpringApplication.run(SpringDataApplication.class, args);
 	}
 
-	@Autowired
-	private APIFixtureRetriever apiFixtureRetriever;
-
 	@Override
 	public void run(String args[]) {
-
-		System.out.println(this.apiFixtureRetriever.byDay(LocalDate.of(2019, Month.AUGUST, 31)).getBody());
 	}
 }
