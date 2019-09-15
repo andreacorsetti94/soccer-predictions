@@ -23,8 +23,6 @@ import java.util.List;
 @PropertySource("classpath:application.properties")
 public class APITeamRetrieverImpl implements APITeamRetriever {
 
-    private static final Logger logger = Logger.getLogger(APITeamRetrieverImpl.class);
-
     @Autowired
     private Environment environment;
 

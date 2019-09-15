@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 @PropertySource("classpath:application.properties")
 public class APIStandingRetrieverImpl implements APIStandingsRetriever {
 
-    private static final Logger logger = Logger.getLogger(APIStandingRetrieverImpl.class);
-
     @Autowired
     private Environment environment;
 

@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 @PropertySource("classpath:application.properties")
 public class APILeagueRetrieverImpl implements APILeagueRetriever {
 
-    private static final Logger logger = Logger.getLogger(APILeagueRetrieverImpl.class);
-
     @Autowired
     private Environment environment;
 

@@ -20,8 +20,6 @@ import org.springframework.stereotype.Service;
 @PropertySource("classpath:application.properties")
 public class APISeasonRetrieverImpl implements APISeasonRetriever {
 
-    private static final Logger logger = Logger.getLogger(APISeasonRetrieverImpl.class);
-
     @Autowired
     private Environment environment;
 
