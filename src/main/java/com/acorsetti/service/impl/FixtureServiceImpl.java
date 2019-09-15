@@ -1,5 +1,6 @@
 package com.acorsetti.service.impl;
 
+import com.acorsetti.api.APIFixtureRetriever;
 import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.repository.FixtureRepository;
 import com.acorsetti.service.FixtureService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,9 @@ public class FixtureServiceImpl implements FixtureService {
 
     @Autowired
     private FixtureRepository fixtureRepository;
+
+    @Autowired
+    private APIFixtureRetriever apiFixtureRetriever;
 
     public List<Fixture> fixturesByDay(LocalDate dayLike){
         return this.fixtureRepository.findByEventDate(dayLike);
@@ -114,6 +119,30 @@ public class FixtureServiceImpl implements FixtureService {
 
     public int goalSum(Fixture fixture){
         return this.getTeamGoalsFor(fixture, fixture.getHomeTeamId()) + this.getTeamGoalsFor(fixture, fixture.getAwayTeamId());
+    }
+
+    @Override
+    public List<Fixture> fixturesInPeriodByAPI(LocalDate lowerBoundDate, LocalDate upperBoundDate) {
+        List<Fixture> fixtures = new ArrayList<>();
+        LocalDate tmp = lowerBoundDate;
+        while( tmp.isBefore(upperBoundDate) ){
+            List<Fixture> tmpDateFixtures = this.apiFixtureRetriever.byDay(tmp).getBody();
+            fixtures.addAll(tmpDateFixtures);
+            tmp = tmp.plusDays(1);
+        }
+        return fixtures;
+    }
+
+    @Override
+    public List<Fixture> fixturesInPeriodByDB(LocalDate lowerBoundDate, LocalDate upperBoundDate) {
+        List<Fixture> fixtures = new ArrayList<>();
+        LocalDate tmp = lowerBoundDate;
+        while( tmp.isBefore(upperBoundDate) ){
+            List<Fixture> tmpDateFixtures = this.fixturesByDay(tmp);
+            fixtures.addAll(tmpDateFixtures);
+            tmp = tmp.plusDays(1);
+        }
+        return fixtures;
     }
 
 }

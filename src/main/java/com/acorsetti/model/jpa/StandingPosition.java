@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @IdClass(StandingPositionCompositeKey.class)
@@ -172,4 +173,18 @@ public class StandingPosition {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StandingPosition that = (StandingPosition) o;
+        return rank == that.rank &&
+                Objects.equals(leagueId, that.leagueId) &&
+                Objects.equals(teamName, that.teamName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(leagueId, rank, teamName);
+    }
 }

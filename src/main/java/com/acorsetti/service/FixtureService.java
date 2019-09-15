@@ -20,4 +20,7 @@ public interface FixtureService {
     List<Fixture> lastTeamMatches(String teamId, int numOfMatches, String... leaguesId);
 
     int goalSum(Fixture fixture);
+    List<Fixture> fixturesInPeriodByAPI(LocalDate lowerBoundDate, LocalDate upperBoundDate);
+    List<Fixture> fixturesInPeriodByDB(LocalDate lowerBoundDate, LocalDate upperBoundDate);
+
 }

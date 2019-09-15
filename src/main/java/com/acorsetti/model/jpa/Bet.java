@@ -61,6 +61,10 @@ public class Bet {
         return odds;
     }
 
+    public void setProfit(Double profit) {
+        this.profit = profit;
+    }
+
     @Override
     public String toString() {
         return "Bet{" +
