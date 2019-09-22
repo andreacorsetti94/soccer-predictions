@@ -2,6 +2,8 @@ package com.acorsetti.service;
 
 import com.acorsetti.SpringDataApplication;
 import com.acorsetti.config.HibernateConfigTest;
+import com.acorsetti.model.jpa.Season;
+import com.acorsetti.repository.SeasonRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class SeasonServiceTest {
     @Autowired
     private SeasonService seasonService;
 
+    @Autowired
+    private SeasonRepository seasonRepository;
+
     @Test
     public void testAllSeasons(){
         assertTrue(this.seasonService.allSeasons().size() > 0);
@@ -37,5 +42,6 @@ public class SeasonServiceTest {
 
         assertNotNull(this.seasonService.byYear(year));
         assertNull(this.seasonService.byYear(notAYear));
+
     }
 }

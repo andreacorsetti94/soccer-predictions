@@ -135,14 +135,7 @@ public class FixtureServiceImpl implements FixtureService {
 
     @Override
     public List<Fixture> fixturesInPeriodByDB(LocalDate lowerBoundDate, LocalDate upperBoundDate) {
-        List<Fixture> fixtures = new ArrayList<>();
-        LocalDate tmp = lowerBoundDate;
-        while( tmp.isBefore(upperBoundDate) ){
-            List<Fixture> tmpDateFixtures = this.fixturesByDay(tmp);
-            fixtures.addAll(tmpDateFixtures);
-            tmp = tmp.plusDays(1);
-        }
-        return fixtures;
+        return this.fixtureRepository.findByEventDateBetween(lowerBoundDate, upperBoundDate);
     }
 
 }

@@ -1,13 +1,22 @@
 package com.acorsetti.service.impl;
 
+import com.acorsetti.api.APIOddsRetriever;
 import com.acorsetti.model.enums.MarketValue;
+import com.acorsetti.model.enums.PickResult;
+import com.acorsetti.model.eval.Chance;
+import com.acorsetti.model.eval.MatchProbability;
+import com.acorsetti.model.eval.PickValue;
+import com.acorsetti.model.jpa.Fixture;
 import com.acorsetti.model.jpa.MatchPick;
+import com.acorsetti.model.odds.FixtureOdds;
 import com.acorsetti.model.odds.OddsValue;
 import com.acorsetti.repository.MatchPickRepository;
-import com.acorsetti.service.MatchPickService;
+import com.acorsetti.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -15,6 +24,21 @@ public class MatchPickServiceImpl implements MatchPickService {
 
     @Autowired
     private MatchPickRepository matchPickRepository;
+
+    @Autowired
+    private FixtureService fixtureService;
+
+    @Autowired
+    private PickResultExtracterService pickResultExtracterService;
+
+    @Autowired
+    private APIOddsRetriever apiOddsRetriever;
+
+    @Autowired
+    private MatchProbabilityCalculatorService matchProbabilityCalculatorService;
+
+    @Autowired
+    private PickValueCalculatorService pickValueCalculatorService;
 
     public List<MatchPick> listAllPicks(){
         return this.matchPickRepository.findAll();
@@ -41,4 +65,51 @@ public class MatchPickServiceImpl implements MatchPickService {
     public void savePicks(List<MatchPick> matchPicks) {
         this.matchPickRepository.saveAll(matchPicks);
     }
+
+    @Override
+    public List<MatchPick> updateMatchPicksResult(List<MatchPick> matchPicks) {
+        matchPicks.forEach( matchPick -> {
+            String fixtureId = matchPick.getFixtureId();
+            Fixture fixture = this.fixtureService.byId(fixtureId);
+            MarketValue mv = matchPick.getMarket();
+            PickResult pickResult = matchPick.getPickResult();
+            if ( pickResult == null || pickResult == PickResult.TO_BE_DEFINED ){
+                pickResult = this.pickResultExtracterService.pickResult(fixture, mv);
+            }
+            matchPick.setPickResult(pickResult);
+        });
+        this.savePicks(matchPicks);
+        return matchPicks;
+    }
+
+    @Override
+    public List<MatchPick> generateNewPicks(List<Fixture> fixtureList) {
+        List<MatchPick> alreadyPresentPicks = this.matchPickRepository.findAll();
+        List<String> fixturesAnalyzed = new ArrayList<>();
+        alreadyPresentPicks.forEach( pick -> fixturesAnalyzed.add(pick.getFixtureId()));
+
+        List<MatchPick> matchPicks = new ArrayList<>();
+        fixtureList.forEach( fixture -> {
+            if ( fixturesAnalyzed.contains(fixture.getFixtureId()) ) return;
+            String id = fixture.getFixtureId();
+            List<FixtureOdds> fixtureOdds = this.apiOddsRetriever.oddsByFixture(id).getBody();
+            fixtureOdds.forEach( fOdd -> {
+                MatchProbability matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
+
+                fOdd.getMarketOdds().forEach( marketOdds -> {
+                    MarketValue mv = marketOdds.getMarketValue();
+                    Chance chance = matchProbability.getMarketChance(mv);
+                    OddsValue oddsValue = marketOdds.getOddsValue();
+                    PickValue pickValue = this.pickValueCalculatorService.calculatePickValue(chance, oddsValue);
+                    MatchPick matchPick = new MatchPick(id, mv, oddsValue, chance, pickValue);
+                    matchPicks.add(matchPick);
+                });
+            });
+        });
+        if ( matchPicks.isEmpty() ) return Collections.emptyList();
+
+        this.matchPickRepository.saveAll(matchPicks);
+        return matchPicks;
+    }
+
 }

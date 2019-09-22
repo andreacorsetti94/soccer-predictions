@@ -59,7 +59,7 @@ public class BetGeneratorServiceImpl implements BetGeneratorService {
 
                 double oddsValue = matchPick.getOdds().getValue();
                 if ( oddsValue >= oddsLowerBound && oddsValue <= oddsUpperBound ){
-                    Bet bet = new Bet(algoId, fixtureId, marketValue, randomAmount(), matchPick.getOdds(), 0.0);
+                    Bet bet = new Bet(algoId, fixtureId, marketValue, randomAmount(), matchPick.getOdds(), null);
                     bets.add(bet);
                 }
             }

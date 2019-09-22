@@ -42,4 +42,11 @@ public class OddsValue {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String toString() {
+        return "OddsValue{" +
+                "value=" + value +
+                '}';
+    }
 }

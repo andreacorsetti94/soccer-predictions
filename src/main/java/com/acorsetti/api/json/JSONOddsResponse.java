@@ -8,6 +8,7 @@ import com.acorsetti.model.odds.OddsValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,12 @@ public class JSONOddsResponse extends JsonResponse<OddsDto>{
     @SuppressWarnings("unchecked")
     @JsonProperty("api")
     private void unpackNested(Map<String, Object> map){
+
+        if ( ! (map.get("odds") instanceof Map) ) { //if there are no odds
+            super.setDataList(Collections.emptyList());
+            super.setResults(0);
+            return;
+        }
         Map<String,Object> oddsMap = (Map<String, Object>) map.get("odds");
         Map<String,Object> hda = (Map<String, Object>) oddsMap.get("Win the match");
         Map<String,Object> exactScore = (Map<String, Object>) oddsMap.get("Score exact (FullTime)");

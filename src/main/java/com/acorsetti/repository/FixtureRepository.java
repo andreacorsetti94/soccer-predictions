@@ -16,4 +16,7 @@ public interface FixtureRepository extends PagingAndSortingRepository<Fixture,St
 
     @Query("FROM Fixture where homeTeamId = ?1 OR awayTeamId = ?1 ORDER BY eventDate DESC")
     List<Fixture> findByTeamIdOrderByEventDateDesc(String teamId);
+
+    @Query("FROM Fixture WHERE DATE(eventDate) >= DATE(?1) AND DATE(eventDate) <= DATE(?2) ORDER BY eventDate ASC")
+    List<Fixture> findByEventDateBetween(LocalDate before, LocalDate after);
 }

@@ -41,4 +41,9 @@ public class BetServiceTest {
         assertFalse( this.betService.hasAlgoAlreadyPlacedBetOnFixture(algo2, fixture2) );
 
     }
+
+    @Test
+    public void testBetsProfitUpdate(){
+        //TODO
+    }
 }

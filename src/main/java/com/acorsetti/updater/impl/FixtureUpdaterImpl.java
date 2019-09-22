@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +27,14 @@ public class FixtureUpdaterImpl implements FixtureUpdater {
     @Autowired
     private FixtureService fixtureService;
 
+    @Autowired
+    private Environment environment;
+
     @Override
     @Scheduled(cron = "${cron.closeFixtures}")
     public void updateCloseFixtures() {
-        int daysPriorToThisDay = Integer.parseInt("${daysBefore}");
-        int daysAfterThisDay = Integer.parseInt("${daysAfter}");
+        int daysPriorToThisDay = Integer.parseInt(this.environment.getProperty("daysBefore"));
+        int daysAfterThisDay = Integer.parseInt(this.environment.getProperty("daysAfter"));
 
         LocalDate now = LocalDate.now();
         LocalDate lowerBound = now.minusDays(daysPriorToThisDay);

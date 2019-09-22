@@ -27,9 +27,7 @@ public class APIOddsRetrieverImpl implements APIOddsRetriever {
     public APIResponse<FixtureOdds> oddsByFixture(String fixtureId) {
         String endpoint = this.environment.getProperty("oddsByFixture").replace("<fixtureId>", fixtureId);
         APIResponse<FixtureOdds> apiResponse = this.remoteDataRetriever.retrieve(endpoint, JSONOddsResponse.class, FixtureOdds.class);
-        apiResponse.getBody().forEach( fixtureOdd -> {
-            fixtureOdd.setFixtureId(fixtureId);
-        });
+        apiResponse.getBody().forEach( fixtureOdd -> fixtureOdd.setFixtureId(fixtureId));
         return apiResponse;
     }
 }
