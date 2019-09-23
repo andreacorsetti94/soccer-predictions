@@ -9,11 +9,13 @@ import com.acorsetti.service.probabilities.StatisticalCalculatorService;
 import com.acorsetti.service.probabilities.TeamFormCalculatorService;
 import com.acorsetti.service.probabilities.TeamStrengthAnalyzerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Qualifier("statisticalCalculatorByDB")
 public class StatisticalCalculatorServiceImpl implements StatisticalCalculatorService {
 
     private static final int MATCHES_TO_CONSIDER = 6;

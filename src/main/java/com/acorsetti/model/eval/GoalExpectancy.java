@@ -7,10 +7,18 @@ public class GoalExpectancy {
 
     private double homeValue;
     private double awayValue;
+    private boolean isLegit = true;
 
     public GoalExpectancy(double homeValue, double awayValue) {
         this.setHomeValue(homeValue);
         this.setAwayValue(awayValue);
+    }
+
+
+    public GoalExpectancy(double homeValue, double awayValue, boolean isLegit) {
+        this.setHomeValue(homeValue);
+        this.setAwayValue(awayValue);
+        this.isLegit = isLegit;
     }
 
     public double getHomeValue() {
@@ -37,6 +45,10 @@ public class GoalExpectancy {
         else{
             this.awayValue = awayValue;
         }
+    }
+
+    public boolean isLegit() {
+        return isLegit;
     }
 
     @Override
