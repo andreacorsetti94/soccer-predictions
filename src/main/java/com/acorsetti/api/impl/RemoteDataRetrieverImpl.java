@@ -74,11 +74,9 @@ public class RemoteDataRetrieverImpl<E,R extends JsonResponse, D> implements Rem
         //map JsonNode instance to concrete json response entity
         R jsonResponse = objectMapper.convertValue(body, jsonResponseClass);
         List<D> dtoList = jsonResponse.getDataList();
-
         //map json response entity to model
         List<E> entityList = new ArrayList<>();
         dtoList.forEach( dto -> entityList.add( this.modelMapper.map(dto, modelClass)));
-
         return new APIResponse<>(statusCode, jsonResponse.getResults(), entityList);
     }
 }

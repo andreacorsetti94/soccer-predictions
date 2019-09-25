@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class JSONStandingResponse extends JsonResponse<StandingDto> {
+
     public JSONStandingResponse() {
     }
 
@@ -19,28 +21,36 @@ public class JSONStandingResponse extends JsonResponse<StandingDto> {
     @SuppressWarnings("unchecked")
     @JsonProperty("api")
     private void unpack(Map<String,Object> standingsMap){
-        List<List<Map<String,String>>> standingPositionsList = (List<List<Map<String, String>>>) standingsMap.get("standings");
         super.setDataList(new ArrayList<>());
-
-        standingPositionsList.forEach( spList -> {
-            spList.forEach( spMap -> {
-                int rank = Integer.parseInt(spMap.get("rank"));
-                String teamName = spMap.get("teamName");
-                int played = Integer.parseInt(spMap.get("matchsPlayed"));
-                int win = Integer.parseInt(spMap.get("win"));
-                int draw = Integer.parseInt(spMap.get("draw"));
-                int lose = Integer.parseInt(spMap.get("lose"));
-                int goalFor = Integer.parseInt(spMap.get("goalsFor"));
-                int goalAgainst = Integer.parseInt(spMap.get("goalsAgainst"));
-                int points = Integer.parseInt(spMap.get("points"));
-                String group = spMap.get("group");
-                LocalDate lastUpd = LocalDate.parse(spMap.get("lastUpdate"));
-                StandingDto standingDto = new StandingDto(null, rank, teamName, played, win,
-                        draw, lose, goalFor, goalAgainst, goalFor-goalAgainst, points, group, lastUpd);
-                super.getDataList().add(standingDto);
+        Object standingObj = standingsMap.get("standings");
+        if ( standingObj instanceof List ){
+            List<List> standingList = (List<List>) standingsMap.get("standings");
+            standingList.forEach( spLeagueList -> {
+                spLeagueList.forEach( spMap -> {
+                    Map<String,String> standingPositionMap = (Map<String, String>) spMap;
+                    int position = Integer.parseInt(standingPositionMap.get("rank"));
+                    String teamName = standingPositionMap.get("teamName");
+                    int played = Integer.parseInt(standingPositionMap.get("matchsPlayed"));
+                    int win = Integer.parseInt(standingPositionMap.get("win"));
+                    int draw = Integer.parseInt(standingPositionMap.get("draw"));
+                    int lose = Integer.parseInt(standingPositionMap.get("lose"));
+                    int goalFor = Integer.parseInt(standingPositionMap.get("goalsFor"));
+                    int goalAgainst = Integer.parseInt(standingPositionMap.get("goalsAgainst"));
+                    int points = Integer.parseInt(standingPositionMap.get("points"));
+                    String groupName = standingPositionMap.get("group");
+                    LocalDate lastUpd = LocalDate.parse(standingPositionMap.get("lastUpdate"));
+                    StandingDto standingDto = new StandingDto(null, position, teamName, played, win,
+                            draw, lose, goalFor, goalAgainst, goalFor-goalAgainst, points, groupName, lastUpd);
+                    super.getDataList().add(standingDto);
+                });
             });
+        }
+        else if( standingObj instanceof Map ){
+            System.out.println("ATTTTTTTTTTTTTTTTTTT: " + standingObj.toString());
+        }
+        else{
+            System.out.println("boh, class: " + standingObj.getClass().getSimpleName());
+        }
 
-        });
-        super.setResults(super.getDataList().size());
     }
 }

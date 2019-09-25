@@ -61,7 +61,7 @@ public class StatisticalCalculatorServiceByAPIImpl implements StatisticalCalcula
             }
         }
         catch (Exception e){
-            logger.error("Catched exception: " + e.toString() + " \nReturning not legit goal expectancy");
+            logger.error("Catched exception: " + e.toString() + " \nReturning not legit goal expectancy.");
             return new GoalExpectancy(0.0,0.0, false);
         }
     }

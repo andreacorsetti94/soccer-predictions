@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class StandingDto {
 
     private String leagueId;
-    private int rank;
+    private int position;
     private String teamName;
 
     private int played;
@@ -16,15 +16,15 @@ public class StandingDto {
     private int goalsAgainst;
     private int goalsDiff;
     private int points;
-    private String group;
+    private String groupName;
     private LocalDate lastUpd;
 
     public StandingDto() {
     }
 
-    public StandingDto(String leagueId, int rank, String teamName, int played, int won, int draw, int lost, int goalsFor, int goalsAgainst, int goalsDiff, int points, String group, LocalDate lastUpd) {
+    public StandingDto(String leagueId, int position, String teamName, int played, int won, int draw, int lost, int goalsFor, int goalsAgainst, int goalsDiff, int points, String groupName, LocalDate lastUpd) {
         this.leagueId = leagueId;
-        this.rank = rank;
+        this.position = position;
         this.teamName = teamName;
         this.played = played;
         this.won = won;
@@ -34,7 +34,7 @@ public class StandingDto {
         this.goalsAgainst = goalsAgainst;
         this.goalsDiff = goalsDiff;
         this.points = points;
-        this.group = group;
+        this.groupName = groupName;
         this.lastUpd = lastUpd;
     }
 
@@ -46,12 +46,12 @@ public class StandingDto {
         this.leagueId = leagueId;
     }
 
-    public int getRank() {
-        return rank;
+    public int getPosition() {
+        return position;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public String getTeamName() {
@@ -126,12 +126,12 @@ public class StandingDto {
         this.points = points;
     }
 
-    public String getGroup() {
-        return group;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public LocalDate getLastUpd() {

@@ -37,8 +37,8 @@ public class FixtureOutcomesEvaluatorServiceImpl implements FixtureOutcomesEvalu
         try{
             matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
         }
-        catch (IllegalArgumentException e){
-            logger.warn("Catched IllegalArgumentException. Fixture with ID: " + fixtureId + " cannot be retrieved from DB",e);
+        catch (Exception e){
+            logger.warn("Catched Exception. Fixture with ID: " + fixtureId + " cannot be retrieved from DB",e);
             return new FixtureEvals("", Collections.emptyList());
         }
 

@@ -47,11 +47,13 @@ public class FixtureUpdaterImpl implements FixtureUpdater {
     @Override
     @Scheduled(cron = "${cron.currentFixtures}")
     public void updateCurrentFixtures() {
+        logger.info("Updating current fixtures....");
         LocalDate now = LocalDate.now();
         LocalDate lowerBound = now.minusDays(2);
         LocalDate upperBound = now.plusDays(2);
 
         List<Fixture> fixturesToSave = this.fixtureService.fixturesInPeriodByAPI(lowerBound, upperBound);
         this.fixtureRepository.saveAll(fixturesToSave);
+        logger.info("Current fixtures updated.");
     }
 }

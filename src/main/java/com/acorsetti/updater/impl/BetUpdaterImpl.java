@@ -48,13 +48,12 @@ public class BetUpdaterImpl implements BetUpdater {
         List<Bet> updatedBets = this.updateOpenBets();
         logger.info("Bets profit updated. Bets: ");
 
-        /*
         List<MatchPick> generatedPicks = this.computeNewMatchPicks();
         logger.info("New match picks generated. Picks generated: " );
 
         List<Bet> betsPlaced = this.placeNewBets(this.matchPickService.openValuablePicks());
         logger.info("New bets placed: " + betsPlaced);
-        */
+
         logger.info("Bets update finished...");
 
     }

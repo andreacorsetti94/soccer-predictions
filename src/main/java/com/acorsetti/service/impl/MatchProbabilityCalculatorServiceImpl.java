@@ -21,7 +21,7 @@ public class MatchProbabilityCalculatorServiceImpl implements MatchProbabilityCa
     private PoissonCalculatorService poissonCalculatorService;
 
     @Override
-    public MatchProbability calculateProbability(Fixture fixture) throws IllegalArgumentException{
+    public MatchProbability calculateProbability(Fixture fixture) throws Exception {
         if ( fixture == null ) throw new IllegalArgumentException("Null Fixture passed as argument!");
         GoalExpectancy goalExpectancy = this.statisticalCalculatorService.calculateExpectancy(fixture);
         if ( !goalExpectancy.isLegit() ) throw new IllegalStateException("Goal expectancy for: " + fixture + " is not legit.");

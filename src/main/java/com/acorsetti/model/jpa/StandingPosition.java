@@ -16,7 +16,7 @@ public class StandingPosition {
     private String leagueId;
 
     @Id
-    private int rank;
+    private int position;
 
     @Id
     private String teamName;
@@ -29,17 +29,17 @@ public class StandingPosition {
     private int goalsAgainst;
     private int goalsDiff;
     private int points;
-    private String group;
+    private String groupName;
     private LocalDate lastUpd;
 
     public StandingPosition() {
     }
 
-    public StandingPosition(String leagueId, int rank, String teamName, int played, int won, int draw, int lost,
-                            int goalsFor, int goalsAgainst, int goalsDiff, int points, String group, LocalDate lastUpd) {
+    public StandingPosition(String leagueId, int position, String teamName, int played, int won, int draw, int lost,
+                            int goalsFor, int goalsAgainst, int goalsDiff, int points, String groupName, LocalDate lastUpd) {
 
         this.leagueId = leagueId;
-        this.rank = rank;
+        this.position = position;
         this.teamName = teamName;
         this.played = played;
         this.won = won;
@@ -49,12 +49,12 @@ public class StandingPosition {
         this.goalsAgainst = goalsAgainst;
         this.goalsDiff = goalsDiff;
         this.points = points;
-        this.group = group;
+        this.groupName = groupName;
         this.lastUpd = lastUpd;
     }
 
-    public int getRank() {
-        return rank;
+    public int getPosition() {
+        return position;
     }
 
     public String getTeamName() {
@@ -93,8 +93,8 @@ public class StandingPosition {
         return points;
     }
 
-    public String getGroup() {
-        return group;
+    public String getGroupName() {
+        return groupName;
     }
 
     public LocalDate getLastUpd() {
@@ -107,8 +107,8 @@ public class StandingPosition {
         this.leagueId = leagueId;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public void setTeamName(String teamName) {
@@ -147,8 +147,8 @@ public class StandingPosition {
         this.points = points;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public void setLastUpd(LocalDate lastUpd) {
@@ -159,7 +159,7 @@ public class StandingPosition {
     public String toString() {
         return "StandingPosition{" +
                 " leagueId=" + leagueId +
-                "  rank=" + rank +
+                ",  position=" + position +
                 ", teamName='" + teamName + '\'' +
                 ", points=" + points +
                 ", played=" + played +
@@ -169,7 +169,7 @@ public class StandingPosition {
                 ", goalsFor=" + goalsFor +
                 ", goalsAgainst=" + goalsAgainst +
                 ", goalsDiff=" + goalsDiff +
-                ", group=" + group +
+                ", groupName=" + groupName +
                 '}';
     }
 
@@ -178,13 +178,13 @@ public class StandingPosition {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StandingPosition that = (StandingPosition) o;
-        return rank == that.rank &&
+        return position == that.position &&
                 Objects.equals(leagueId, that.leagueId) &&
                 Objects.equals(teamName, that.teamName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(leagueId, rank, teamName);
+        return Objects.hash(leagueId, position, teamName);
     }
 }

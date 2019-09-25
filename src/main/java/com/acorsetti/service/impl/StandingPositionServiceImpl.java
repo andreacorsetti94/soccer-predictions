@@ -15,6 +15,6 @@ public class StandingPositionServiceImpl implements StandingPositionService {
     private StandingPositionRepository standingPositionRepository;
 
     public List<StandingPosition> byLeague(String leagueId){
-        return this.standingPositionRepository.findByLeagueIdOrderByRankAsc(leagueId);
+        return this.standingPositionRepository.findByLeagueIdOrderByPositionAsc(leagueId);
     }
 }

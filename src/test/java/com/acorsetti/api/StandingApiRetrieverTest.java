@@ -136,14 +136,14 @@ public class StandingApiRetrieverTest {
         List<StandingPosition> standingPositionList = apiResponse.getBody();
         StandingPosition first = standingPositionList.get(0);
         assertEquals("718", first.getLeagueId());
-        assertEquals(1, first.getRank());
+        assertEquals(1, first.getPosition());
         assertEquals("AC Milan", first.getTeamName());
         assertEquals(38, first.getPlayed());
         assertEquals(24, first.getWon());
         assertEquals(10, first.getDraw());
         assertEquals(4, first.getLost());
         assertEquals(82, first.getPoints());
-        assertEquals("Serie A", first.getGroup());
+        assertEquals("Serie A", first.getGroupName());
         assertEquals(LocalDate.of(2018, 2, 15), first.getLastUpd());
     }
 }

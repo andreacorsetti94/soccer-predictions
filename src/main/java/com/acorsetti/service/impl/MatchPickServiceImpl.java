@@ -12,6 +12,7 @@ import com.acorsetti.model.odds.FixtureOdds;
 import com.acorsetti.model.odds.OddsValue;
 import com.acorsetti.repository.MatchPickRepository;
 import com.acorsetti.service.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Service
 public class MatchPickServiceImpl implements MatchPickService {
+    private static final Logger logger = Logger.getLogger(MatchPickServiceImpl.class);
 
     @Autowired
     private MatchPickRepository matchPickRepository;
@@ -94,8 +96,15 @@ public class MatchPickServiceImpl implements MatchPickService {
             String id = fixture.getFixtureId();
             List<FixtureOdds> fixtureOdds = this.apiOddsRetriever.oddsByFixture(id).getBody();
             fixtureOdds.forEach( fOdd -> {
-                MatchProbability matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
-
+                MatchProbability matchProbability;
+                try{
+                    matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
+                }
+                catch (Exception e){
+                    logger.warn("Catched exception: " + e.toString() + " while calculating probability" +
+                            " for fixture: " + fixture);
+                    return;
+                }
                 fOdd.getMarketOdds().forEach( marketOdds -> {
                     MarketValue mv = marketOdds.getMarketValue();
                     Chance chance = matchProbability.getMarketChance(mv);

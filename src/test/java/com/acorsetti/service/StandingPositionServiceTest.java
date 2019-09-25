@@ -39,7 +39,7 @@ public class StandingPositionServiceTest {
         int count = 1;
         while( count < positionList.size() ){
             StandingPosition currentStandingPosition = positionList.get(count);
-            assertTrue(currentStandingPosition.getRank() >= tmpStandingPosition.getRank());
+            assertTrue(currentStandingPosition.getPosition() >= tmpStandingPosition.getPosition());
             tmpStandingPosition = currentStandingPosition;
             count++;
         }
