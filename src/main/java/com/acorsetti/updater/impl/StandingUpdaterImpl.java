@@ -34,6 +34,7 @@ public class StandingUpdaterImpl implements StandingUpdater {
     @Override
     @Scheduled(cron = "${cron.standingsUpdate}")
     public void updateAllStandings() {
+        logger.info("Standing position update started...");
         List<League> leagueList = this.leagueRepository.findAll();
         List<StandingPosition> allStandings = new ArrayList<>();
         leagueList.forEach( league -> {
@@ -42,5 +43,6 @@ public class StandingUpdaterImpl implements StandingUpdater {
         });
 
         this.standingPositionRepository.saveAll(allStandings);
+        logger.info("Standing position update complete");
     }
 }
