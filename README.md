@@ -1,2 +1,2 @@
-# spring-data
-Spring data project
+# soccer-predictions
+Spring boot / MVC / Data project
