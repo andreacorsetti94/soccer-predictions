@@ -18,27 +18,9 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
-		/*
-		List<Fixture> fixtureList = this.fixtureService.fixturesInPeriodByDB(LocalDate.now(), LocalDate.now().plusDays(6));
-		List<MatchPick> matchPicks = this.matchPickService.generateNewPicks(fixtureList);
-		System.out.println(matchPicks);
-		*/
-		//this.seasonUpdater.updateSeasons();
-		//this.countryUpdater.updateCountries();
-		//this.leagueUpdater.updateLeagues();
-		//this.teamUpdater.updateAllTeams();
-		this.standingUpdater.updateAllStandings();
-		//this.fixtureUpdater.updateCloseFixtures();
-		//this.betUpdater.updateResultPicksAndBets();
-		System.out.println("OVER.");
+		this.completeUpdateHelper();
 		System.exit(0);
-
 	}
-
-	/*
-	Update complete:
-	seasons - countries - leagues - teams - standings - all fixtures - bets
-	 */
 
 	@Autowired
 	private FixtureUpdater fixtureUpdater;
@@ -57,5 +39,27 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Autowired
 	private StandingUpdater standingUpdater;
+
+	/**
+	 * takes approximatelly 10 minutes...15k api calls
+	 */
+	private void completeUpdateHelper(){
+		this.seasonUpdater.updateSeasons();
+		this.countryUpdater.updateCountries();
+		this.leagueUpdater.updateLeagues();
+		this.teamUpdater.updateAllTeams();
+		this.standingUpdater.updateAllStandings();
+		this.fixtureUpdater.updateCloseFixtures();
+		this.betUpdater.updateResultPicksAndBets();
+	}
+
+	/**
+	 * takes approximatelly 5 minutes
+	 */
+	private void rapidUpdateHelper(){
+		this.standingUpdater.updateAllStandings();
+		this.fixtureUpdater.updateCurrentFixtures();
+		this.betUpdater.updateResultPicksAndBets();
+	}
 
 }

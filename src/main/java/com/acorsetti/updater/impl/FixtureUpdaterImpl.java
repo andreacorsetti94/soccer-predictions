@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 @Service
@@ -33,8 +34,9 @@ public class FixtureUpdaterImpl implements FixtureUpdater {
     @Override
     @Scheduled(cron = "${cron.closeFixtures}")
     public void updateCloseFixtures() {
-        int daysPriorToThisDay = Integer.parseInt(this.environment.getProperty("daysBefore"));
-        int daysAfterThisDay = Integer.parseInt(this.environment.getProperty("daysAfter"));
+        logger.info("Updating close fixtures....");
+        int daysPriorToThisDay = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("daysBefore")));
+        int daysAfterThisDay = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("daysAfter")));
 
         LocalDate now = LocalDate.now();
         LocalDate lowerBound = now.minusDays(daysPriorToThisDay);
@@ -42,6 +44,7 @@ public class FixtureUpdaterImpl implements FixtureUpdater {
 
         List<Fixture> fixturesToSave = this.fixtureService.fixturesInPeriodByAPI(lowerBound, upperBound);
         this.fixtureRepository.saveAll(fixturesToSave);
+        logger.info("Close fixtures updated.");
     }
 
     @Override

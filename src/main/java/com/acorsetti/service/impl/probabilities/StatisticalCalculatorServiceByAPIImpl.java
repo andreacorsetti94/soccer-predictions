@@ -9,10 +9,11 @@ import com.acorsetti.service.probabilities.StatisticalCalculatorService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Qualifier("statisticalCalculatorByAPI")
+@Profile("development")
 public class StatisticalCalculatorServiceByAPIImpl implements StatisticalCalculatorService {
     private static final Logger logger = Logger.getLogger(StatisticalCalculatorServiceByAPIImpl.class);
 

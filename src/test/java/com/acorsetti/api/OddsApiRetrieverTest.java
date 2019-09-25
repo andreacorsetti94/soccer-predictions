@@ -15,6 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -37,6 +38,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @Transactional
 @Configuration
 @PropertySource("classpath:endpoints.properties")
+@ActiveProfiles("test")
 public class OddsApiRetrieverTest {
 
     private MockRestServiceServer mockServer;

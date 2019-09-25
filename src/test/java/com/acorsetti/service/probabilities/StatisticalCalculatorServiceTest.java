@@ -8,6 +8,8 @@ import com.acorsetti.model.jpa.FixtureBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -22,6 +24,7 @@ import static org.junit.Assert.fail;
         classes = { HibernateConfigTest.class, SpringDataApplication.class},
         loader = AnnotationConfigContextLoader.class)
 @Transactional
+@ActiveProfiles("test")
 public class StatisticalCalculatorServiceTest {
 
     @Autowired
@@ -29,7 +32,7 @@ public class StatisticalCalculatorServiceTest {
 
     @Test
     public void test(){
-        Fixture f = new FixtureBuilder().withFixtureId("ID1").withHomeTeamId("505").withAwayTeamId("498").build();
+        Fixture f = new FixtureBuilder().withFixtureId("ID1").withHomeTeamId("505").withAwayTeamId("498").withLeagueId("713").build();
         GoalExpectancy ge = this.statisticalCalculatorService.calculateExpectancy(f);
         assertTrue(ge.getHomeValue() > 0.0 && ge.getAwayValue() > 0.0);
     }

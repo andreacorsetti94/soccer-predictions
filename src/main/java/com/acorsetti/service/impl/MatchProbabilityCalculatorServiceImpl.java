@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class MatchProbabilityCalculatorServiceImpl implements MatchProbabilityCalculatorService {
 
     @Autowired
-    @Qualifier("statisticalCalculatorByAPI")
     private StatisticalCalculatorService statisticalCalculatorService;
 
     @Autowired

@@ -20,9 +20,11 @@ public class JSONStandingResponse extends JsonResponse<StandingDto> {
     @SuppressWarnings("unchecked")
     @JsonProperty("api")
     private void unpack(Map<String,Object> standingsMap){
+        System.out.println(" map: " + standingsMap);
         super.setDataList(new ArrayList<>());
         Object standingObj = standingsMap.get("standings");
         if ( standingObj instanceof List ){
+            System.out.println("NORMAL LIST: ");
             List<List> standingList = (List<List>) standingsMap.get("standings");
             standingList.forEach( spLeagueList -> {
                 spLeagueList.forEach( spMap -> {
@@ -32,6 +34,7 @@ public class JSONStandingResponse extends JsonResponse<StandingDto> {
             });
         }
         else if( standingObj instanceof Map ){
+            System.out.println("MAP!!!!!!!: ");
             Map<String,List<Map<String,String>>> m = (Map<String,List<Map<String,String>>>) standingObj;
             m.keySet().forEach( key -> {
                 List<Map<String,String>> list = m.get(key);
@@ -41,10 +44,11 @@ public class JSONStandingResponse extends JsonResponse<StandingDto> {
         else{
             return;
         }
-
+        super.setResults(super.getDataList().size());
     }
 
     private void extractStandingPositionFromMap(Map<String,String> spMap){
+        System.out.println("MAP V: " + spMap);
         int position = Integer.parseInt(spMap.get("rank"));
         String teamName = spMap.get("teamName");
         int played = Integer.parseInt(spMap.get("matchsPlayed"));
