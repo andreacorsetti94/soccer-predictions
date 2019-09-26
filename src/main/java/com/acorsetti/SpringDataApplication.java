@@ -1,6 +1,6 @@
 package com.acorsetti;
 
-import com.acorsetti.updater.*;
+import com.acorsetti.core.updater.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
