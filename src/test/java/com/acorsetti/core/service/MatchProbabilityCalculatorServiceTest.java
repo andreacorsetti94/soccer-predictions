@@ -47,9 +47,6 @@ public class MatchProbabilityCalculatorServiceTest {
 
         MatchProbability mp = this.poissonCalculatorService.calculateOutcomesProbabilities(fixture, goalExpectancy);
 
-        System.out.println("Match Probabilities for fixture between team " + homeTeamId +" and " + awayTeamId+ " :");
-        System.out.println(mp.toString());
-
         for(MarketValue mv: mp.getProbabilities().keySet()){
             Chance chance = mp.getMarketChance(mv);
             assertTrue(chance.getValue() >= 0.01 && chance.getValue() <= 0.99);

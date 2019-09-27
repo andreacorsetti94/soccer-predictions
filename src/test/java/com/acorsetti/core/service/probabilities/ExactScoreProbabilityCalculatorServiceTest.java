@@ -61,7 +61,6 @@ public class ExactScoreProbabilityCalculatorServiceTest {
         GoalExpectancy goalExpectancy = new GoalExpectancy(0.0, 0.0);
         Map<MarketValue, Chance> exactScoreMap = this.exactScoreProbabilityCalculatorService.calculate(goalExpectancy);
         exactScoreMap.forEach((mv,chance) -> {
-            System.out.println("mv: " + mv + " - chance: " + chance.getValue());
             assertSame(mv.getType(), MarketType.EXACT_SCORE);
             assertTrue(chance.getValue() <= 0.99 && chance.getValue() >= 0.01);
         });

@@ -18,10 +18,10 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
-		/*
+
 		this.completeUpdateHelper();
 		System.exit(0);
-		*/
+
 	}
 
 	@Autowired
@@ -43,7 +43,7 @@ public class SpringDataApplication implements CommandLineRunner {
 	private StandingUpdater standingUpdater;
 
 	/**
-	 * takes approximatelly 10 minutes...15k api calls
+	 * takes approximatelly 15 minutes...15k api calls
 	 */
 	private void completeUpdateHelper(){
 		this.seasonUpdater.updateSeasons();
