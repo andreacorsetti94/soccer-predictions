@@ -18,8 +18,10 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
+		/*
 		this.completeUpdateHelper();
 		System.exit(0);
+		*/
 	}
 
 	@Autowired

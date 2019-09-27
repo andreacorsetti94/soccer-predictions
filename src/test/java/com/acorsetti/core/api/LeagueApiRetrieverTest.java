@@ -16,6 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,13 +30,13 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+@PropertySource("classpath:endpoints.properties")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
         classes = { HibernateConfigTest.class, SpringDataApplication.class},
-        loader = AnnotationConfigContextLoader.class)
+        loader = AnnotationConfigWebContextLoader.class)
 @Transactional
-@Configuration
-@PropertySource("classpath:endpoints.properties")
+@WebAppConfiguration
 @ActiveProfiles("test")
 public class LeagueApiRetrieverTest {
 

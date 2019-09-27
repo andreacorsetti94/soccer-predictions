@@ -10,6 +10,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -21,8 +23,9 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
         classes = { HibernateConfigTest.class, SpringDataApplication.class},
-        loader = AnnotationConfigContextLoader.class)
+        loader = AnnotationConfigWebContextLoader.class)
 @Transactional
+@WebAppConfiguration
 @ActiveProfiles("test")
 public class FixtureServiceTest {
 
