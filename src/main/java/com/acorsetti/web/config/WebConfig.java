@@ -1,4 +1,4 @@
-package com.acorsetti.web;
+package com.acorsetti.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-@Service
-@Profile("development")
+//@Service
+//@Profile("test")
 public class StatisticalCalculatorServiceByAPIImpl implements StatisticalCalculatorService {
     private static final Logger logger = Logger.getLogger(StatisticalCalculatorServiceByAPIImpl.class);
 

@@ -1,4 +1,4 @@
-package com.acorsetti.web;
+package com.acorsetti.web.config;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

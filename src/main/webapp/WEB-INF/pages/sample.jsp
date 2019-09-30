@@ -11,30 +11,38 @@
 <p>&nbsp;</p>
 <p>Next matches:</p>
 <table class="todayTable" style="width: 100%;">
-<tbody>
-<tr>
-<td class="dateHeader">${dateCol}</td>
-<td class="homeHeader">${homeTeamCol}</td>
-<td class="awayHeader">${awayTeamCol}</td>
-<td class="hdaHomeHeader">${hdaHomeCol}</td>
-<td class="hdaDrawHeader">${hdaDrawCol}</td>
-<td class="hdaAwayHeader">${hdaAwayCol}</td>
-<td class="under2_5Header">${U2_5ol}</td>
-<td class="over2_5Header">${O2_5Col}</td>
-<td class="goalHeader">${GoalCol}</td>
-<td class="noGoalHeader">${noGoalCol}</td>
-</tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-<tr><td class="dateHeader">Today</td><td class="homeHeader">SE Palmeiras</td><td class="awayHeader">CSA Alagoano</td><td class="hdaHomeHeader%">60 %</td><td class="hdaDrawHeader%">22 %</td><td class="hdaAwayHeader%">18 %</td><td class="under2_5Header">Under 2,5 %</td><td class="over2_5Header">Over 2,5 %</td><td class="goalHeader">Goal %</td><td class="noGoalHeader">No Goal %</td></tr>
-</tbody></table>
+<th>${dateCol}</th>
+<th>${countryCol}</th>
+<th>${leagueCol}</th>
+<th>${homeTeamCol}</th>
+<th>${awayTeamCol}</th>
+<th>${resultCol}</th>
+<th>${hdaHomeCol}</th>
+<th>${hdaDrawCol}</th>
+<th>${hdaAwayCol}</th>
+<th>${U2_5ol}</th>
+<th>${O2_5Col}</th>
+<th>${GoalCol}</th>
+<th>${noGoalCol}</th>
 
+		<c:forEach var="match" items="${matches}" varStatus="status">
+			<tr>
+				<td>${match.date}</td>
+				<td>${match.countryName}</td>
+				<td>${match.leagueName}</td>
+				<td>${match.homeTeamName}</td>
+				<td>${match.awayTeamName}</td>
+				<td>${match.result}</td>
+				<td>${match.hdaHome}</td>
+				<td>${match.hdaDraw}</td>
+				<td>${match.hdaAway}</td>
+				<td>${match.u2_5}</td>
+				<td>${match.o2_5}</td>
+				<td>${match.bttsYes}</td>
+				<td>${match.bttsNo}</td>
+			</tr>
+		</c:forEach>
+
+</table>
 </body>
 </html>

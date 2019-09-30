@@ -18,4 +18,8 @@ public class CountryServiceImpl implements CountryService {
         return this.countryRepository.findAll();
     }
 
+    public Country byCountryName(String name){
+        List<Country> countries = this.countryRepository.findByCountryName(name);
+        return countries.size() > 0 ? countries.get(0) : null;
+    }
 }

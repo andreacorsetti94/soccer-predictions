@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CountryService {
     List<Country> allCountries();
+    Country byCountryName(String name);
 }

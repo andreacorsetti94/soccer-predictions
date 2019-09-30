@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Qualifier("statisticalCalculatorByDB")
-@Profile("test")
+@Profile({"development","test"})
 public class StatisticalCalculatorServiceImpl implements StatisticalCalculatorService {
 
     private static final int MATCHES_TO_CONSIDER = 6;

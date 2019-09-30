@@ -8,5 +8,5 @@ import java.util.List;
 public interface CountryRepository extends PagingAndSortingRepository<Country,String> {
 
     List<Country> findAll();
-
+    List<Country> findByCountryName(String name);
 }
