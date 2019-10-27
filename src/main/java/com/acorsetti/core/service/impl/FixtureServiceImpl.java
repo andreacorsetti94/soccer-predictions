@@ -4,6 +4,7 @@ import com.acorsetti.core.api.APIFixtureRetriever;
 import com.acorsetti.core.model.jpa.Fixture;
 import com.acorsetti.core.repository.FixtureRepository;
 import com.acorsetti.core.service.FixtureService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class FixtureServiceImpl implements FixtureService {
+
+    private static final Logger logger = Logger.getLogger(FixtureServiceImpl.class);
 
     @Autowired
     private FixtureRepository fixtureRepository;
@@ -129,6 +132,8 @@ public class FixtureServiceImpl implements FixtureService {
             List<Fixture> tmpDateFixtures = this.apiFixtureRetriever.byDay(tmp).getBody();
             fixtures.addAll(tmpDateFixtures);
             tmp = tmp.plusDays(1);
+
+            logger.info("Retrieved fixtures for: " + tmp.toString());
         }
         return fixtures;
     }

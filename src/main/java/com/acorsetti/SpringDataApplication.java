@@ -16,12 +16,20 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Autowired
 	private BetUpdater betUpdater;
 
+	@Autowired
+	private EventUpdater eventUpdater;
+
 	@Override
 	public void run(String args[]) {
 
+		this.eventUpdater.updateCloseGoalEvents();
+		System.out.println("Event update complete");
+		System.exit(0);
+		/*
+		//this.completeUpdateHelper();
 		this.rapidUpdateHelper();
 		System.exit(0);
-
+		*/
 	}
 
 	@Autowired
@@ -59,8 +67,9 @@ public class SpringDataApplication implements CommandLineRunner {
 	 * takes approximatelly 5 minutes
 	 */
 	private void rapidUpdateHelper(){
-		//this.standingUpdater.updateAllStandings();
+		this.standingUpdater.updateAllStandings();
 		//this.fixtureUpdater.updateCurrentFixtures();
+		this.fixtureUpdater.updateCloseFixtures();
 		this.betUpdater.updateResultPicksAndBets();
 	}
 

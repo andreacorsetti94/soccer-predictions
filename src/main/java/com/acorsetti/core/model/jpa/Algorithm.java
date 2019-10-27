@@ -19,7 +19,7 @@ public class Algorithm {
     @Override
     public String toString() {
         return "Algorithm{" +
-                "id='" + id + '\'' +
+                "eventId='" + id + '\'' +
                 '}';
     }
 

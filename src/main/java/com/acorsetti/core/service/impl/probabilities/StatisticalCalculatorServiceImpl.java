@@ -19,7 +19,7 @@ import java.util.List;
 @Profile({"development","test"})
 public class StatisticalCalculatorServiceImpl implements StatisticalCalculatorService {
 
-    private static final int MATCHES_TO_CONSIDER = 6;
+    private static final int MATCHES_TO_CONSIDER = 100;
 
     @Autowired
     private FixtureService fixtureService;
