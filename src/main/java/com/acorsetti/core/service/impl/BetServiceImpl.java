@@ -45,6 +45,7 @@ public class BetServiceImpl implements BetService {
             MarketValue mv = bet.getMarket();
 
             MatchPick matchPick = this.matchPickService.byFixtureAndMarket(fixtureId, mv);
+            if ( matchPick == null ) return;
             PickResult pickResult = matchPick.getPickResult();
             double profit;
             if ( pickResult == null || pickResult == PickResult.TO_BE_DEFINED ) return;

@@ -3,9 +3,12 @@ package com.acorsetti.core.service.impl;
 import com.acorsetti.core.model.eval.GoalExpectancy;
 import com.acorsetti.core.model.eval.MatchProbability;
 import com.acorsetti.core.model.jpa.Fixture;
+import com.acorsetti.core.model.jpa.GoalExpectancyEntity;
+import com.acorsetti.core.repository.GoalExpectancyRepository;
 import com.acorsetti.core.service.MatchProbabilityCalculatorService;
 import com.acorsetti.core.service.probabilities.PoissonCalculatorService;
 import com.acorsetti.core.service.probabilities.StatisticalCalculatorService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

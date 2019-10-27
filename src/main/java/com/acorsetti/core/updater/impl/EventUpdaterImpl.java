@@ -29,9 +29,6 @@ public class EventUpdaterImpl implements EventUpdater {
     private static final Logger logger = Logger.getLogger(EventUpdaterImpl.class);
 
     @Autowired
-    private Environment environment;
-
-    @Autowired
     private FixtureService fixtureService;
 
     @Autowired
@@ -44,17 +41,15 @@ public class EventUpdaterImpl implements EventUpdater {
     @Scheduled(cron = "${cron.updateEvents}")
     public void updateCloseGoalEvents() {
         logger.info("Event update started...");
-        int daysPriorToThisDay = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("daysBefore")));
-        int daysAfterThisDay = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("daysAfter")));
 
-        LocalDate now = LocalDate.now();
-        LocalDate lowerBound = now.minusDays(daysPriorToThisDay);
-        LocalDate upperBound = now.plusDays(daysAfterThisDay);
+        LocalDate lowerBound = LocalDate.now().minusDays(90);
+        LocalDate upperBound = LocalDate.now();
 
         List<Event> events = new ArrayList<>();
-        List<Fixture> fixtures = this.fixtureService.fixturesInPeriodByDB(lowerBound, upperBound);
+        List<Fixture> fixtures = this.fixtureService.fixturesInPeriodByAPI(lowerBound, upperBound);
         fixtures.forEach( fixture -> {
             String id = fixture.getFixtureId();
+            System.out.println("FixtureId: " + id);
             APIResponse<Event> apiResponse = apiEventRetriever.byFixtureId(id);
             List<Event> eventsBody = apiResponse.getBody();
             events.addAll(apiResponse.getBody().stream().filter( event ->

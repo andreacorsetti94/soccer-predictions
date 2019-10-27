@@ -1,10 +1,17 @@
 package com.acorsetti;
 
+import com.acorsetti.core.model.eval.MatchProbability;
+import com.acorsetti.core.model.jpa.Fixture;
+import com.acorsetti.core.service.FixtureService;
+import com.acorsetti.core.service.MatchProbabilityCalculatorService;
 import com.acorsetti.core.updater.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
@@ -19,11 +26,25 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Autowired
 	private EventUpdater eventUpdater;
 
+	@Autowired
+	private FixtureService fixtureService;
+
+	@Autowired
+	private MatchProbabilityCalculatorService matchProbabilityCalculatorService;
+
 	@Override
 	public void run(String args[]) {
 
-		this.eventUpdater.updateCloseGoalEvents();
-		System.out.println("Event update complete");
+		List<Fixture> fixtureList = this.fixtureService.fixturesInPeriodByAPI(LocalDate.now(), LocalDate.now().plusDays(6));
+		fixtureList.forEach( fixture -> {
+			try {
+				MatchProbability matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
+				System.out.println("calculated prob for fixture: " + fixture.getFixtureId());
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+		});
+
 		System.exit(0);
 		/*
 		//this.completeUpdateHelper();
@@ -68,8 +89,7 @@ public class SpringDataApplication implements CommandLineRunner {
 	 */
 	private void rapidUpdateHelper(){
 		this.standingUpdater.updateAllStandings();
-		//this.fixtureUpdater.updateCurrentFixtures();
-		this.fixtureUpdater.updateCloseFixtures();
+		this.fixtureUpdater.updateCurrentFixtures();
 		this.betUpdater.updateResultPicksAndBets();
 	}
 

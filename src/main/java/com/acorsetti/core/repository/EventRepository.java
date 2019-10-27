@@ -22,7 +22,7 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Long>
 
 
 
-    @Query("FROM Event WHEREeventType = 'Goal' AND detail != 'Missed Penalty' AND elapsed >= ?1 AND elapsed <= ?2")
+    @Query("FROM Event WHERE eventType = 'Goal' AND detail != 'Missed Penalty' AND elapsed >= ?1 AND elapsed <= ?2")
     List<Event> findAllGoalsAndElapsedBetween(int pre, int post);
 
     @Query("FROM Event WHERE eventType = 'Goal' AND detail != 'Missed Penalty' AND fixtureId = ?1")
