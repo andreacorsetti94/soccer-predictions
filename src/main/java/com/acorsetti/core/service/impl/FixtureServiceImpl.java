@@ -45,6 +45,7 @@ public class FixtureServiceImpl implements FixtureService {
                     }
                 )
                 .filter(match -> match.getEventDate().isBefore(LocalDateTime.now() ) )
+                .filter(match -> match.getStatus().equals("Match Finished") || match.getStatusShort().equals("FT") )
                 .limit(numOfMatches)
                 .collect(Collectors.toList());
     }

@@ -5,19 +5,17 @@ import com.acorsetti.core.model.eval.TeamsForm;
 import com.acorsetti.core.model.eval.TeamsStrength;
 import com.acorsetti.core.model.jpa.Fixture;
 import com.acorsetti.core.service.FixtureService;
-import com.acorsetti.core.service.probabilities.StatisticalCalculatorService;
+import com.acorsetti.core.service.probabilities.GoalExpectancyCalculatorService;
 import com.acorsetti.core.service.probabilities.TeamFormCalculatorService;
 import com.acorsetti.core.service.probabilities.TeamStrengthAnalyzerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@Profile({"development","test"})
-public class StatisticalCalculatorServiceImpl implements StatisticalCalculatorService {
+@Service("GoalExpectancyCalculatorServiceImpl")
+public class GoalExpectancyCalculatorServiceImpl implements GoalExpectancyCalculatorService {
 
     private static final int MATCHES_TO_CONSIDER = 100;
 

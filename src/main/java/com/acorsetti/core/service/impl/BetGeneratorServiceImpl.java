@@ -7,6 +7,7 @@ import com.acorsetti.core.model.jpa.MatchPick;
 import com.acorsetti.core.service.AlgorithmService;
 import com.acorsetti.core.service.BetGeneratorService;
 import com.acorsetti.core.service.BetService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -20,6 +21,8 @@ import java.util.Random;
 @Service
 @PropertySource(value={"classpath:application.properties"})
 public class BetGeneratorServiceImpl implements BetGeneratorService {
+
+    private static final Logger logger = Logger.getLogger(BetGeneratorServiceImpl.class);
 
     @Value("${bet.placing.oddsLowerBound}")
     private double oddsLowerBound;
@@ -46,7 +49,8 @@ public class BetGeneratorServiceImpl implements BetGeneratorService {
         List<Bet> bets = new ArrayList<>();
 
         List<Algorithm> algorithms = this.algorithmService.listAllAlgorithms();
-        for(Algorithm algorithm: algorithms){
+        for(int i = 0; i < algorithms.size(); i++){
+            Algorithm algorithm = algorithms.get(i);
             String algoId = algorithm.getId();
             int betsToPlace = new Random().nextInt(numOfBetsUpperBound) + numOfBetsLowerBound;
 
@@ -63,6 +67,7 @@ public class BetGeneratorServiceImpl implements BetGeneratorService {
                     bets.add(bet);
                 }
             }
+            logger.info("Bets placed for algorithm n# " + i + ". Progress: " + i + " / " + algorithms.size());
         }
         return bets;
     }

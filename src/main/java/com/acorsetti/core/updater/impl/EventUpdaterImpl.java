@@ -47,17 +47,19 @@ public class EventUpdaterImpl implements EventUpdater {
 
         List<Event> events = new ArrayList<>();
         List<Fixture> fixtures = this.fixtureService.fixturesInPeriodByAPI(lowerBound, upperBound);
-        fixtures.forEach( fixture -> {
+
+        for(int i = 0; i < fixtures.size(); i++){
+            Fixture fixture = fixtures.get(i);
             String id = fixture.getFixtureId();
-            System.out.println("FixtureId: " + id);
             APIResponse<Event> apiResponse = apiEventRetriever.byFixtureId(id);
-            List<Event> eventsBody = apiResponse.getBody();
             events.addAll(apiResponse.getBody().stream().filter( event ->
-                event.getEventType().equals("Goal") && !event.getDetail().equals("Missed Penalty")
+                    event.getEventType().equals("Goal") && !event.getDetail().equals("Missed Penalty")
             ).collect(Collectors.toList()));
 
-            logger.info("GoalEvents added: " + eventsBody.size() + " this day: " + fixture.getEventDate().toLocalDate());
-        });
+            logger.info("Updated events for fixture: " + id + " Progress: " + i + " / " + fixtures.size());
+
+        }
+
         this.eventRepository.saveAll(events);
     }
 }

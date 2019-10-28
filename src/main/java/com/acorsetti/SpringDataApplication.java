@@ -1,13 +1,15 @@
 package com.acorsetti;
 
-import com.acorsetti.core.model.eval.MatchProbability;
+import com.acorsetti.core.model.eval.GoalExpectancy;
 import com.acorsetti.core.model.jpa.Fixture;
 import com.acorsetti.core.model.jpa.GoalExpectancyEntity;
 import com.acorsetti.core.repository.GoalExpectancyRepository;
 import com.acorsetti.core.service.FixtureService;
 import com.acorsetti.core.service.MatchProbabilityCalculatorService;
+import com.acorsetti.core.service.probabilities.GoalExpectancyCalculatorService;
 import com.acorsetti.core.updater.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,9 +36,17 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Autowired
 	private MatchProbabilityCalculatorService matchProbabilityCalculatorService;
 
+	@Autowired
+	@Qualifier("GoalExpectancyCalculatorServiceWeighted")
+	private GoalExpectancyCalculatorService goalExpectancyCalculatorService;
+
+	@Autowired
+	private GoalExpectancyRepository goalExpectancyRepository;
+
 	@Override
 	public void run(String args[]) {
-
+		this.goalExpectancyUpdater.updateGoalExpectancy();
+		System.exit(0);
 		/*
 		//this.completeUpdateHelper();
 		this.rapidUpdateHelper();
@@ -62,6 +72,9 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Autowired
 	private StandingUpdater standingUpdater;
 
+	@Autowired
+	private GoalExpectancyUpdater goalExpectancyUpdater;
+
 	/**
 	 * takes approximatelly 15 minutes...15k api calls
 	 */
@@ -73,6 +86,7 @@ public class SpringDataApplication implements CommandLineRunner {
 		this.standingUpdater.updateAllStandings();
 		this.fixtureUpdater.updateCloseFixtures();
 		this.betUpdater.updateResultPicksAndBets();
+		this.goalExpectancyUpdater.updateGoalExpectancy();
 	}
 
 	/**
@@ -82,6 +96,7 @@ public class SpringDataApplication implements CommandLineRunner {
 		//this.standingUpdater.updateAllStandings();
 		this.fixtureUpdater.updateCurrentFixtures();
 		this.betUpdater.updateResultPicksAndBets();
+		this.goalExpectancyUpdater.updateGoalExpectancy();
 	}
 
 }

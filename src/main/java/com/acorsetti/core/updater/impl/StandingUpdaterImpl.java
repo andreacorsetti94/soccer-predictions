@@ -37,9 +37,16 @@ public class StandingUpdaterImpl implements StandingUpdater {
         logger.info("Standing position update started...");
         List<League> leagueList = this.leagueRepository.findAll();
         List<StandingPosition> allStandings = new ArrayList<>();
-        leagueList.forEach( league -> {
+
+        for(int i = 0; i < leagueList.size(); i++){
+            League league = leagueList.get(i);
             List<StandingPosition> standingPositions = this.apiStandingsRetriever.standingsByLeague(league.getLeagueId()).getBody();
             allStandings.addAll(standingPositions);
+            logger.info("League updated. Progress: " + i + " / " + leagueList.size());
+        }
+
+        leagueList.forEach( league -> {
+
         });
 
         this.standingPositionRepository.saveAll(allStandings);

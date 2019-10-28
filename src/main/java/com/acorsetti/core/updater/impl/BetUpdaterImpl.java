@@ -41,20 +41,19 @@ public class BetUpdaterImpl implements BetUpdater {
     @Override
     @Scheduled(cron = "${cron.updateBets}")
     public void updateResultPicksAndBets(){
-        logger.info("Bets update started...");
-        List<MatchPick> matchPicks = this.updatePickResults();                                  //7''
-        logger.info("MatchPick Results updated. Picks: " + matchPicks);
+        logger.info("1/5: Bets update started...");
+        this.updatePickResults();                                  //7''
 
-        List<Bet> updatedBets = this.updateOpenBets();                                          //3' and 30''
-        logger.info("Bets profit updated. Bets: ");
+        logger.info("2/5: Updating bets profit...");
+        this.updateOpenBets();                                          //3' and 30''
 
-        List<MatchPick> generatedPicks = this.computeNewMatchPicks();                           //2' and 10''
-        logger.info("New match picks generated. Picks generated: " );
+        logger.info("3/5: Generating new picks... ");
+        this.computeNewMatchPicks();                           //2' and 10''
 
-        List<Bet> betsPlaced = this.placeNewBets(this.matchPickService.openValuablePicks());    //45''
-        logger.info("New bets placed: " + betsPlaced);
+        logger.info("4/5: Placing new bets..." );
+        this.placeNewBets(this.matchPickService.openValuablePicks());    //45''
 
-        logger.info("Bets update finished...");
+        logger.info("5/5: Bets update finished!");
 
     }
 

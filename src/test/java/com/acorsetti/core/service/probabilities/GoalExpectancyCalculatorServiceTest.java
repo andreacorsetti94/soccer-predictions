@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -27,15 +26,15 @@ import static org.junit.Assert.fail;
 @Transactional
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class StatisticalCalculatorServiceTest {
+public class GoalExpectancyCalculatorServiceTest {
 
     @Autowired
-    private StatisticalCalculatorService statisticalCalculatorService;
+    private GoalExpectancyCalculatorService goalExpectancyCalculatorService;
 
     @Test
     public void test(){
         Fixture f = new FixtureBuilder().withFixtureId("ID1").withHomeTeamId("505").withAwayTeamId("498").withLeagueId("713").build();
-        GoalExpectancy ge = this.statisticalCalculatorService.calculateExpectancy(f);
+        GoalExpectancy ge = this.goalExpectancyCalculatorService.calculateExpectancy(f);
         assertTrue(ge.getHomeValue() > 0.0 && ge.getAwayValue() > 0.0);
     }
 
@@ -43,7 +42,7 @@ public class StatisticalCalculatorServiceTest {
     public void testNotValidInput(){
         GoalExpectancy ge;
         try{
-            ge = this.statisticalCalculatorService.calculateExpectancy(null);
+            ge = this.goalExpectancyCalculatorService.calculateExpectancy(null);
             assertTrue(ge.getHomeValue() > 0.0 && ge.getAwayValue() > 0.0);
         }
         catch (IllegalArgumentException e){

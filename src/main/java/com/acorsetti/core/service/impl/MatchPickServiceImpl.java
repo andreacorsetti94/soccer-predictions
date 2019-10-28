@@ -70,7 +70,9 @@ public class MatchPickServiceImpl implements MatchPickService {
 
     @Override
     public List<MatchPick> updateMatchPicksResult(List<MatchPick> matchPicks) {
-        matchPicks.forEach( matchPick -> {
+        for(int i = 0; i < matchPicks.size(); i++){
+            MatchPick matchPick = matchPicks.get(i);
+
             String fixtureId = matchPick.getFixtureId();
             Fixture fixture = this.fixtureService.byId(fixtureId);
             MarketValue mv = matchPick.getMarket();
@@ -79,7 +81,9 @@ public class MatchPickServiceImpl implements MatchPickService {
                 pickResult = this.pickResultExtracterService.pickResult(fixture, mv);
             }
             matchPick.setPickResult(pickResult);
-        });
+            logger.info("Updated matchpick. Progress: " + i + " / " + matchPicks.size());
+        }
+
         this.savePicks(matchPicks);
         return matchPicks;
     }
@@ -91,8 +95,11 @@ public class MatchPickServiceImpl implements MatchPickService {
         alreadyPresentPicks.forEach( pick -> fixturesAnalyzed.add(pick.getFixtureId()));
 
         List<MatchPick> matchPicks = new ArrayList<>();
-        fixtureList.forEach( fixture -> {
-            if ( fixturesAnalyzed.contains(fixture.getFixtureId()) ) return;
+
+        for(int i = 0; i < fixtureList.size(); i++){
+            Fixture fixture = fixtureList.get(i);
+
+            if ( fixturesAnalyzed.contains(fixture.getFixtureId()) ) continue;
             String id = fixture.getFixtureId();
             List<FixtureOdds> fixtureOdds = this.apiOddsRetriever.oddsByFixture(id).getBody();
             fixtureOdds.forEach( fOdd -> {
@@ -114,7 +121,9 @@ public class MatchPickServiceImpl implements MatchPickService {
                     matchPicks.add(matchPick);
                 });
             });
-        });
+            logger.info("New MatchPick generated. Progress: " + i + " / " + fixtureList.size());
+        }
+
         if ( matchPicks.isEmpty() ) return Collections.emptyList();
 
         this.matchPickRepository.saveAll(matchPicks);

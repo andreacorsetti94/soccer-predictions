@@ -30,7 +30,11 @@ public class GoalExpectancy {
     }
 
     public void setHomeValue(double homeValue) {
-        if ( homeValue <= MIN_LEGIT_VALUE ){
+        Double homeValDouble = homeValue;
+        if ( homeValDouble.isNaN() ) {
+            this.isLegit = false;
+        }
+        if (  homeValue <= MIN_LEGIT_VALUE ){
             this.homeValue = MIN_LEGIT_VALUE;
         }
         else{
@@ -39,6 +43,10 @@ public class GoalExpectancy {
     }
 
     public void setAwayValue(double awayValue) {
+        Double awayValDouble = awayValue;
+        if ( awayValDouble.isNaN() ) {
+            this.isLegit = false;
+        }
         if ( awayValue <= MIN_LEGIT_VALUE ){
             this.awayValue = MIN_LEGIT_VALUE;
         }

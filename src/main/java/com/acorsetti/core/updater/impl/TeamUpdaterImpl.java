@@ -44,7 +44,9 @@ public class TeamUpdaterImpl implements TeamUpdater {
 
         List<LeagueTeam> allLeagueTeams = new ArrayList<>();
         List<Team> teamList = new ArrayList<>();
-        leagueList.forEach( league -> {
+
+        for(int i = 0; i < leagueList.size(); i++){
+            League league = leagueList.get(i);
             List<LeagueTeam> leagueTeams = this.apiTeamRetriever.byLeagueId(league.getLeagueId()).getBody();
             logger.info("Teams Update: League-Teams retrieved: " + leagueTeams);
             allLeagueTeams.addAll(leagueTeams);
@@ -57,7 +59,9 @@ public class TeamUpdaterImpl implements TeamUpdater {
                 }
                 else teamList.add(team);
             });
-        });
+            logger.info("Teams for league: " + league.getLeagueId() + " have been updated. Progress: " + i + " / " + leagueList.size());
+        }
+
         this.leagueTeamRepository.saveAll(allLeagueTeams);
         logger.info("Teams Update: League-Teams retrieved saved. ");
         this.teamRepository.saveAll(teamList);
