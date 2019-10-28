@@ -2,6 +2,8 @@ package com.acorsetti;
 
 import com.acorsetti.core.model.eval.MatchProbability;
 import com.acorsetti.core.model.jpa.Fixture;
+import com.acorsetti.core.model.jpa.GoalExpectancyEntity;
+import com.acorsetti.core.repository.GoalExpectancyRepository;
 import com.acorsetti.core.service.FixtureService;
 import com.acorsetti.core.service.MatchProbabilityCalculatorService;
 import com.acorsetti.core.updater.*;
@@ -35,17 +37,6 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Override
 	public void run(String args[]) {
 
-		List<Fixture> fixtureList = this.fixtureService.fixturesInPeriodByAPI(LocalDate.now(), LocalDate.now().plusDays(6));
-		fixtureList.forEach( fixture -> {
-			try {
-				MatchProbability matchProbability = this.matchProbabilityCalculatorService.calculateProbability(fixture);
-				System.out.println("calculated prob for fixture: " + fixture.getFixtureId());
-			} catch (Exception e) {
-				System.out.println(e.toString());
-			}
-		});
-
-		System.exit(0);
 		/*
 		//this.completeUpdateHelper();
 		this.rapidUpdateHelper();
@@ -88,7 +79,7 @@ public class SpringDataApplication implements CommandLineRunner {
 	 * takes approximatelly 5 minutes
 	 */
 	private void rapidUpdateHelper(){
-		this.standingUpdater.updateAllStandings();
+		//this.standingUpdater.updateAllStandings();
 		this.fixtureUpdater.updateCurrentFixtures();
 		this.betUpdater.updateResultPicksAndBets();
 	}

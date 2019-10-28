@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +48,10 @@ public class GoalExpectancyUpdaterImpl implements GoalExpectancyUpdater {
 
         List<Fixture> fixtureList = this.fixtureService.fixturesInPeriodByAPI(now, upperBound);
         fixtureList.forEach( fixture -> {
+
+            //do not calculate expectancy if the match is already started
+            if ( fixture.getEventDate().isAfter(LocalDateTime.now() ) ) return;
+
             GoalExpectancy goalExpectancy = this.statisticalCalculatorService.calculateExpectancy(fixture);
             if ( goalExpectancy == null || !goalExpectancy.isLegit() ) return;
 
