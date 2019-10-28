@@ -32,6 +32,8 @@ public class GoalExpectancyCalculatorServiceWeighted implements GoalExpectancyCa
      */
     @Override
     public GoalExpectancy calculateExpectancy(Fixture fixture) {
+        if ( fixture == null ) throw new IllegalArgumentException("Fixture Argument is null!");
+
         logger.info("GoalExpectancyCalculatorServiceWeighted calculating GE for match: " + fixture.getFixtureId());
         String homeTeamId = fixture.getHomeTeamId();
         String awayTeamId = fixture.getAwayTeamId();
