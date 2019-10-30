@@ -32,6 +32,7 @@ public class StandingPosition {
     private String groupName;
     private LocalDate lastUpd;
 
+
     public StandingPosition() {
     }
 

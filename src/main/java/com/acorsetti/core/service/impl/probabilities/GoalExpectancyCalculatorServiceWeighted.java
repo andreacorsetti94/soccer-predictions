@@ -35,6 +35,18 @@ public class GoalExpectancyCalculatorServiceWeighted implements GoalExpectancyCa
         if ( fixture == null ) throw new IllegalArgumentException("Fixture Argument is null!");
 
         logger.info("GoalExpectancyCalculatorServiceWeighted calculating GE for match: " + fixture.getFixtureId());
+        Double[] expectedGoals = this.expectedGoals(fixture);
+
+        double expectedGoalsHomeTeam = expectedGoals[0];
+        double expectedGoalsAwayTeam = expectedGoals[1];
+
+        GoalExpectancy ge = new GoalExpectancy(expectedGoalsHomeTeam, expectedGoalsAwayTeam);
+        logger.info("Goal Expectancy calculated for match:" + fixture.getFixtureId() + " : " + ge.toString());
+        return ge;
+    }
+
+    protected Double[] expectedGoals(Fixture fixture){
+
         String homeTeamId = fixture.getHomeTeamId();
         String awayTeamId = fixture.getAwayTeamId();
 
@@ -97,8 +109,7 @@ public class GoalExpectancyCalculatorServiceWeighted implements GoalExpectancyCa
         double expectedGoalsHomeTeam = (weigthedHomeScoredAvg + weigthedAwayConceivedAvg)/ 2.0;
         double expectedGoalsAwayTeam = (weigthedAwayScoredAvg + weigthedHomeConceivedAvg)/ 2.0;
 
-        GoalExpectancy ge = new GoalExpectancy(expectedGoalsHomeTeam, expectedGoalsAwayTeam);
-        logger.info("Goal Expectancy calculated for match:" + fixture.getFixtureId() + " : " + ge.toString());
-        return ge;
+        return new Double[]{expectedGoalsHomeTeam, expectedGoalsAwayTeam};
     }
+
 }

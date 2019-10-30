@@ -64,6 +64,7 @@ public class GoalExpectancyUpdaterImpl implements GoalExpectancyUpdater {
 
                 //do not calculate expectancy if the match is already started
                 if ( currentFixture.getEventDate().isBefore(LocalDateTime.now() ) ) continue;
+                if ( this.goalExpectancyRepository.findByFixtureIdAndCalculator(currentFixture.getFixtureId(),service.getClass().getSimpleName()) != null ) continue;
 
                 GoalExpectancy goalExpectancy = service.calculateExpectancy(currentFixture);
                 if ( goalExpectancy == null || !goalExpectancy.isLegit() ) continue;
@@ -76,4 +77,5 @@ public class GoalExpectancyUpdaterImpl implements GoalExpectancyUpdater {
                     " is calculated. Progress: " + i + " / " + fixtureList.size());
         }
     }
+
 }

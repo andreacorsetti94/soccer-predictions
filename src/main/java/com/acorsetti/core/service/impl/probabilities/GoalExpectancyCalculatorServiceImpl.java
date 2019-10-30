@@ -1,15 +1,11 @@
 package com.acorsetti.core.service.impl.probabilities;
 
 import com.acorsetti.core.model.eval.GoalExpectancy;
-import com.acorsetti.core.model.eval.TeamsForm;
-import com.acorsetti.core.model.eval.TeamsStrength;
 import com.acorsetti.core.model.jpa.Fixture;
 import com.acorsetti.core.service.FixtureService;
+import com.acorsetti.core.service.TeamService;
 import com.acorsetti.core.service.probabilities.GoalExpectancyCalculatorService;
-import com.acorsetti.core.service.probabilities.TeamFormCalculatorService;
-import com.acorsetti.core.service.probabilities.TeamStrengthAnalyzerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +19,7 @@ public class GoalExpectancyCalculatorServiceImpl implements GoalExpectancyCalcul
     private FixtureService fixtureService;
 
     @Autowired
-    private TeamStrengthAnalyzerService teamStrengthAnalyzerService;
-
-    @Autowired
-    private TeamFormCalculatorService teamFormCalculatorService;
+    private TeamService teamService;
 
     @Override
     public GoalExpectancy calculateExpectancy(Fixture fixture) {
@@ -38,25 +31,72 @@ public class GoalExpectancyCalculatorServiceImpl implements GoalExpectancyCalcul
         List<Fixture> lastHomeTeamMatches = this.fixtureService.lastTeamMatches(homeTeamId, MATCHES_TO_CONSIDER);
         List<Fixture> lastAwayTeamMatches = this.fixtureService.lastTeamMatches(awayTeamId, MATCHES_TO_CONSIDER);
 
-        TeamsStrength ts = this.teamStrengthAnalyzerService.analyzeStrengths(homeTeamId, awayTeamId, lastHomeTeamMatches, lastAwayTeamMatches);
+        double homeAttackStrength;
+        double awayAttackStrength;
+        double homeDefenceStrength;
+        double awayDefenceStrength;
 
-        double homeAttackStrength = ts.getHomeAttackStrength();
-        double awayAttackStrength = ts.getAwayAttackStrenth();
+        double avgHomeTeamGoalsFor = this.teamService.avgGoalsScored(homeTeamId,lastHomeTeamMatches);
+        double avgHomeTeamGoalsConceived = this.teamService.avgGoalsConceived(homeTeamId, lastHomeTeamMatches);
+        double avgAwayTeamGoalsFor = this.teamService.avgGoalsScored(awayTeamId,lastAwayTeamMatches);
+        double avgAwayTeamGoalsConceived = this.teamService.avgGoalsConceived(awayTeamId,lastAwayTeamMatches);
 
-        double homeDefenceStrength = ts.getHomeDefenceStrength();
-        double awayDefenceStrength = ts.getAwayDefenceStrenth();
+        double avgGoalsScored = (avgAwayTeamGoalsFor + avgHomeTeamGoalsFor) / 2;
+        double avgGoalsConceived = (avgAwayTeamGoalsConceived + avgHomeTeamGoalsConceived) / 2;
 
+        if ( avgGoalsScored == 0.0 ){
+            homeAttackStrength = 0.0;
+            awayAttackStrength = 0.0;
+        }
+        else{
+            homeAttackStrength = avgHomeTeamGoalsFor / avgGoalsScored;
+            awayAttackStrength = avgAwayTeamGoalsFor / avgGoalsScored;
+        }
 
-        TeamsForm tf = this.teamFormCalculatorService.calculateTeamsForm(homeTeamId,awayTeamId,lastHomeTeamMatches,lastAwayTeamMatches);
-        double homeTeamForm = tf.getHomeTeamForm();
-        double awayTeamForm = tf.getAwayTeamForm();
+        if ( avgGoalsConceived == 0.0 ){
+            homeDefenceStrength = 0.0;
+            awayDefenceStrength = 0.0;
+        }
+        else{
+            homeDefenceStrength = avgHomeTeamGoalsConceived / avgGoalsConceived;
+            awayDefenceStrength = avgAwayTeamGoalsConceived / avgGoalsConceived;
+        }
+
+        double homeForm = 0.0;
+        double awayForm = 0.0;
+
+        int homeMatchesCount = 0;
+        int awayMatchesCount = 0;
+
+        for(Fixture fixture1: lastHomeTeamMatches){
+            int pointsForGame = this.fixtureService.pointsForTeam(fixture1,homeTeamId);
+
+            if (fixture1.getHomeTeamId().equals(homeTeamId)) {
+                homeMatchesCount++;
+                homeForm += pointsForGame;
+            }
+        }
+        if (homeMatchesCount != 0) {
+            homeForm = homeForm / homeMatchesCount;
+        }
+
+        for(Fixture fixture2: lastAwayTeamMatches){
+            int pointsForGame = this.fixtureService.pointsForTeam(fixture2,awayTeamId);
+            if ( fixture2.getAwayTeamId().equals(awayTeamId) ){
+                awayMatchesCount++;
+                awayForm += pointsForGame;
+            }
+        }
+        if (awayMatchesCount != 0) {
+            awayForm = awayForm / awayMatchesCount;
+        }
 
         double hge = homeAttackStrength * awayDefenceStrength;
         double age = awayAttackStrength * homeDefenceStrength;
 
         double homeAdvantageOffset = offset(hge, age);
 
-        if ( homeTeamForm > awayTeamForm ){
+        if ( homeForm > awayForm ){
             return new GoalExpectancy(hge + homeAdvantageOffset, age);
         }
         else{

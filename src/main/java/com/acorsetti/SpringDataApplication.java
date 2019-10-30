@@ -45,13 +45,12 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String args[]) {
-		this.goalExpectancyUpdater.updateGoalExpectancy();
-		System.exit(0);
-		/*
+
+		///*
 		//this.completeUpdateHelper();
 		this.rapidUpdateHelper();
 		System.exit(0);
-		*/
+		//*/
 	}
 
 	@Autowired
