@@ -50,6 +50,22 @@ public class FixtureServiceImpl implements FixtureService {
                 .collect(Collectors.toList());
     }
 
+    public List<Fixture> lastTeamMatchesBeforeAMatch(String teamId, int numOfMatches, Fixture pivotFixture, String... leaguesId){
+        List<Fixture> teamMatches = this.fixtureRepository.findByTeamIdOrderByEventDateDesc(teamId);
+
+        return teamMatches
+                .stream()
+                .filter(match ->{
+                            if ( leaguesId == null || leaguesId.length == 0 ) return true;
+                            return Arrays.asList(leaguesId).contains(match.getLeagueId());
+                        }
+                )
+                .filter(match -> match.getEventDate().isBefore(pivotFixture.getEventDate()) )
+                .filter(match -> match.getStatus().equals("Match Finished") || match.getStatusShort().equals("FT") )
+                .limit(numOfMatches)
+                .collect(Collectors.toList());
+    }
+
     public boolean isCompleted(Fixture fixture){
         if ( fixture == null ) return false;
         return fixture.getStatusShort().equals("FT") || fixture.getStatus().equals("Match Finished");
@@ -142,6 +158,11 @@ public class FixtureServiceImpl implements FixtureService {
     @Override
     public List<Fixture> fixturesInPeriodByDB(LocalDate lowerBoundDate, LocalDate upperBoundDate) {
         return this.fixtureRepository.findByEventDateBetween(lowerBoundDate, upperBoundDate);
+    }
+
+    @Override
+    public List<Fixture> byLeagueHomeAndAway(String leagueId, String home, String away) {
+        return this.fixtureRepository.findByLeagueIdAndHomeIdAndAwayId(leagueId, home, away);
     }
 
 }

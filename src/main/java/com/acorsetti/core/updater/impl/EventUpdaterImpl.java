@@ -11,11 +11,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,8 +42,8 @@ public class EventUpdaterImpl implements EventUpdater {
     public void updateCloseGoalEvents() {
         logger.info("Event update started...");
 
-        LocalDate lowerBound = LocalDate.now().minusDays(90);
-        LocalDate upperBound = LocalDate.now();
+        LocalDate lowerBound = LocalDate.of(2017, Month.JANUARY, 1);
+        LocalDate upperBound = LocalDate.of(2017, Month.JUNE, 29);
 
         List<Event> events = new ArrayList<>();
         List<Fixture> fixtures = this.fixtureService.fixturesInPeriodByAPI(lowerBound, upperBound);
@@ -53,7 +53,12 @@ public class EventUpdaterImpl implements EventUpdater {
             String id = fixture.getFixtureId();
             APIResponse<Event> apiResponse = apiEventRetriever.byFixtureId(id);
             events.addAll(apiResponse.getBody().stream().filter( event ->
-                    event.getEventType().equals("Goal") && !event.getDetail().equals("Missed Penalty")
+                    event.getEventType().equals("Goal") &&
+                    !event.getDetail().equals("Missed Penalty") &&
+                    //check if this event is not already stored in repository
+                    this.eventRepository.findAllByEventTypeAndFixtureIdAndElapsedAndTeamIdAndDetail(
+                            event.getEventType(), id, event.getElapsed(), event.getTeamId(), event.getDetail()
+                    ).isEmpty()
             ).collect(Collectors.toList()));
 
             logger.info("Updated events for fixture: " + id + " Progress: " + i + " / " + fixtures.size());

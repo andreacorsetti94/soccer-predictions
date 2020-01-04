@@ -36,7 +36,7 @@ public class MatchProbabilityCalculatorServiceImpl implements MatchProbabilityCa
         GoalExpectancyEntity GEE = this.goalExpectancyRepository.findByFixtureIdAndCalculator(id, calculatorName);
         if ( GEE == null ){
             goalExpectancy = this.goalExpectancyCalculatorService.calculateExpectancy(fixture);
-            if ( goalExpectancy == null || goalExpectancy.isLegit() ){
+            if ( goalExpectancy == null || !goalExpectancy.isLegit() ){
                 throw new RuntimeException("Goal Exception calculated for fixture: " + id + " is not legit.");
             }
             GoalExpectancyEntity createdGEE = new GoalExpectancyEntity(id, goalExpectancy, calculatorName);

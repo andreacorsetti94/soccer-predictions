@@ -20,7 +20,9 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Long>
     @Query("FROM Event WHERE eventType = ?1 AND fixtureId = ?2")
     List<Event> findAllByEventTypeAndFixtureId(String eventType, String fixtureId);
 
-
+    @Query("FROM Event WHERE eventType = ?1 AND fixtureId = ?2 AND elapsed = ?3 AND teamId = ?4 AND detail = ?5")
+    List<Event> findAllByEventTypeAndFixtureIdAndElapsedAndTeamIdAndDetail(String eventType, String fixtureId,
+             int elapsed, String teamId, String detail);
 
     @Query("FROM Event WHERE eventType = 'Goal' AND detail != 'Missed Penalty' AND elapsed >= ?1 AND elapsed <= ?2")
     List<Event> findAllGoalsAndElapsedBetween(int pre, int post);
