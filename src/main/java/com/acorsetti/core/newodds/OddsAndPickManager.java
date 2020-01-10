@@ -18,7 +18,7 @@ public class OddsAndPickManager {
 
     public void manageOddsAndPicks(){
         System.out.println("Updating fixtures....");
-        this.fixtureUpdater.updateCloseFixtures();
+        this.fixtureUpdater.updateCurrentFixtures();
         System.out.println("Updating fixtures complete. Updating value picks outcome...");
         this.valuePickOutcomeDefiner.defineValuePickOutcome();
         System.out.println("Updating value picks outcome complete. Saving odds and creating picks...");

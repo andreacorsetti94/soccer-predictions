@@ -31,8 +31,11 @@ public class ValuePickOutcomeDefiner {
                 Fixture fixture = this.fixtureService.byId(fixtureId);
 
                 String outcome = this.computeFixtureOutcome(fixture, marketValue);
-                PreparedStatement preparedUpdate = conn.prepareStatement("update valuepick set outcome = ?");
+                PreparedStatement preparedUpdate = conn.prepareStatement("update valuepick set outcome = ? where fixtureid = ? and market = ?");
                 preparedUpdate.setString(1, outcome);
+                preparedUpdate.setString(2, fixtureId);
+                preparedUpdate.setString(3, marketValue.toString());
+
                 preparedUpdate.execute();
             }
             conn.close();

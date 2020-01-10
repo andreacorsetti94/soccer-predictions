@@ -43,11 +43,7 @@ public class PickGenerator {
                     OddsValue oddsValue = oddEntity.getAvgVal();
                     double pickValue = this.getPickValue(oddsValue, chance);
                     if( pickValue > 0 ){
-                        System.out.println("Value pick! OddEntity" + oddEntity + " chance: " + chance.getValue() + " // Value: " + pickValue);
                         this.saveValuePick(f.getFixtureId(), marketValue, chance, oddsValue, pickValue);
-                    }
-                    else {
-                        System.out.println("NOT a Value pick! OddEntity" + oddEntity + " chance: " + chance.getValue() + " // Value: " + pickValue);
                     }
                 });
             } catch (Exception e) {
