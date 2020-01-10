@@ -29,7 +29,7 @@ import java.util.List;
 @Service
 public class RemoteDataRetrieverImpl<E,R extends JsonResponse, D> implements RemoteDataRetriever<E,R,D> {
 
-    private static final Logger logger = Logger.getLogger(APICountryRetrieverImpl.class);
+    private static final Logger logger = Logger.getLogger(RemoteDataRetrieverImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;

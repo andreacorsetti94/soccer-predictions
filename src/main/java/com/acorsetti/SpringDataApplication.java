@@ -7,6 +7,11 @@ import com.acorsetti.core.model.eval.GoalExpectancy;
 import com.acorsetti.core.model.eval.MatchProbability;
 import com.acorsetti.core.model.jpa.Fixture;
 import com.acorsetti.core.model.jpa.GoalExpectancyEntity;
+import com.acorsetti.core.model.odds.FixtureOdds;
+import com.acorsetti.core.newodds.NewOddsManager;
+import com.acorsetti.core.newodds.OddEntity;
+import com.acorsetti.core.newodds.OddsAndPickManager;
+import com.acorsetti.core.newodds.PickGenerator;
 import com.acorsetti.core.repository.GoalExpectancyRepository;
 import com.acorsetti.core.service.FixtureService;
 import com.acorsetti.core.service.MatchProbabilityCalculatorService;
@@ -53,51 +58,24 @@ public class SpringDataApplication implements CommandLineRunner {
 	private MatchProbabilityCalculatorService matchProbabilityCalculatorService;
 
 	@Autowired
-	@Qualifier("GoalExpectancyCalculatorServiceWeightedAnalytics")
+	@Qualifier("GoalExpectancyCalculatorServiceWeighted")
 	private GoalExpectancyCalculatorService goalExpectancyCalculatorService;
 
-	@Autowired
-	private GoalExpectancyRepository goalExpectancyRepository;
-
-	@Autowired
-	private LiveStatsUpdaterService liveStatsUpdaterService;
 
 	@Autowired
 	private PoissonCalculatorService poissonCalculatorService;
+
+	@Autowired
+	private OddsAndPickManager oddsAndPickManager;
 
 	@Override
 	public void run(String args[]) {
 
 
-		//this.eventUpdater.updateCloseGoalEvents();
-		//this.rapidUpdateHelper();
-		//this.poissonFromMeanToChance();
-		this.linearRegression();
+		this.oddsAndPickManager.manageOddsAndPicks();
 		System.exit(0);
 		/*
 		this.liveStatsUpdater.updateLiveStats();
-
-		/*
-		MatchStatistics ms1 = new MatchStatistics(
-				new ShotsOnTargetStat(2,8), new ShotsOffTargetStat(1,5),
-				new BlockedShotsStat(1,5),new TotalShotsStat(4,17),
-				new InboxShotsStat(3,9), new OutboxShotsStat(1,8),
-				new KeeperSavesStat(4,1), 	new PossessionStat(23,77, 241,773,154,690),
-				new CornerStat(3,6), new OffsideStat(0,2), new DirtyPlayStat(9,6,1,1,0,0)
-		);
-		ms1.setFixtureId("100");
-		MatchStatistics ms2 = new MatchStatistics(
-				new ShotsOnTargetStat(8,8), new ShotsOffTargetStat(3,6),
-				new BlockedShotsStat(111,5),new TotalShotsStat(3,50),
-				new InboxShotsStat(3,9), new OutboxShotsStat(2,10),
-				new KeeperSavesStat(4,5), 	new PossessionStat(23,77, 241,773,154,700),
-				new CornerStat(3,6), new OffsideStat(0,2), new DirtyPlayStat(10,7,0,1,2,0)
-		);
-		ms2.setFixtureId("100");
-		TimedMatchStatistics tms1 = new TimedMatchStatistics(ms1, 45);
-		TimedMatchStatistics tms2 = new TimedMatchStatistics(ms2, 50);
-		TimedMatchStatistics diff = new TimedMatchStatisticsDiffCalculator().diff(tms1, tms2);
-		System.out.println(diff);
 		 */
 	}
 
@@ -146,6 +124,8 @@ public class SpringDataApplication implements CommandLineRunner {
 		this.goalExpectancyUpdater.updateGoalExpectancy();
 		//this.eventUpdater.updateCloseGoalEvents();
 	}
+
+
 
 	private void poissonFromMeanToChance(){
 		int n = 0;

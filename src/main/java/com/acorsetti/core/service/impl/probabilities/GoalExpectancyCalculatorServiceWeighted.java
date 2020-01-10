@@ -34,14 +34,12 @@ public class GoalExpectancyCalculatorServiceWeighted implements GoalExpectancyCa
     public GoalExpectancy calculateExpectancy(Fixture fixture) {
         if ( fixture == null ) throw new IllegalArgumentException("Fixture Argument is null!");
 
-        logger.info("GoalExpectancyCalculatorServiceWeighted calculating GE for match: " + fixture.getFixtureId());
         Double[] expectedGoals = this.expectedGoals(fixture);
 
         double expectedGoalsHomeTeam = expectedGoals[0];
         double expectedGoalsAwayTeam = expectedGoals[1];
 
         GoalExpectancy ge = new GoalExpectancy(expectedGoalsHomeTeam, expectedGoalsAwayTeam);
-        logger.info("Goal Expectancy calculated for match:" + fixture.getFixtureId() + " : " + ge.toString());
         return ge;
     }
 
@@ -50,10 +48,16 @@ public class GoalExpectancyCalculatorServiceWeighted implements GoalExpectancyCa
         String homeTeamId = fixture.getHomeTeamId();
         String awayTeamId = fixture.getAwayTeamId();
 
+        /*
         List<Fixture> lastHomeTeamMatches =
                 this.fixtureService.lastTeamMatches(fixture.getHomeTeamId(), WEIGHTS.length);
         List<Fixture> lastAwayTeamMatches =
                 this.fixtureService.lastTeamMatches(fixture.getAwayTeamId(), WEIGHTS.length);
+        */
+        List<Fixture> lastHomeTeamMatches =
+                this.fixtureService.lastTeamMatchesBeforeAMatch(fixture.getHomeTeamId(), WEIGHTS.length, fixture);
+        List<Fixture> lastAwayTeamMatches =
+                this.fixtureService.lastTeamMatchesBeforeAMatch(fixture.getAwayTeamId(), WEIGHTS.length, fixture);
 
 
         double dividendoHomeScored = 0.0;
