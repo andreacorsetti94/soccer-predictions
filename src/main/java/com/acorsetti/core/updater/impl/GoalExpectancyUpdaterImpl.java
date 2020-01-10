@@ -49,8 +49,12 @@ public class GoalExpectancyUpdaterImpl implements GoalExpectancyUpdater {
     @Scheduled(cron = "${cron.updateBets}")
     public void updateGoalExpectancy() {
 
+        /*
         GoalExpectancyCalculatorService[] services =
                 {goalExpectancyCalculatorServiceImpl, goalExpectancyCalculatorServiceWeighted};
+        */
+        GoalExpectancyCalculatorService[] services =
+                {goalExpectancyCalculatorServiceWeighted};
 
         int nextDays = Integer.parseInt(Objects.requireNonNull(environment.getProperty("nextDays")));
         LocalDate now = LocalDate.now();
